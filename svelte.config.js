@@ -7,7 +7,6 @@ const config = {
     // for more information about preprocessors
     preprocess: vitePreprocess(),
     compilerOptions: {
-        runes: true,
         preserveComments: false,
         preserveWhitespace: false,
         modernAst: true
