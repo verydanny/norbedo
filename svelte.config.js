@@ -1,5 +1,5 @@
-import adapter from '@sveltejs/adapter-cloudflare'
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
+import adapter from '@sveltejs/adapter-cloudflare';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -14,16 +14,13 @@ const config = {
 
     kit: {
         output: {
-            preloadStrategy: 'preload-mjs'
+            bundleStrategy: 'inline'
         },
         adapter: adapter({
             config: './wrangler.jsonc'
         }),
-        inlineStyleThreshold: Infinity,
-        router: {
-            resolution: 'server'
-        }
+        inlineStyleThreshold: Infinity
     }
-}
+};
 
-export default config
+export default config;
