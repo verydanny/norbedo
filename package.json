@@ -44,10 +44,5 @@
         "vitest": "^3.2.4",
         "vitest-browser-svelte": "^1.0.0",
         "wrangler": "^4.24.0"
-    },
-    "dependencies": {
-        "@types/three": "^0.178.0",
-        "svelte-cubed": "^0.2.1",
-        "three": "^0.178.0"
     }
 }
