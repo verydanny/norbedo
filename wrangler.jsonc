@@ -14,5 +14,11 @@
     "assets": {
         "directory": ".svelte-kit/cloudflare",
         "binding": "ASSETS"
-    }
+    },
+    "routes": [
+        {
+            "pattern": "norbedo.com/*",
+            "zone_id": "58582690ed7f0e1ccd880051b8ac2608"
+        }
+    ]
 }

@@ -15,12 +15,15 @@ const config = {
 
     kit: {
         output: {
-            bundleStrategy: 'inline'
+            preloadStrategy: 'preload-mjs'
         },
         adapter: adapter({
             config: './wrangler.jsonc'
         }),
-        inlineStyleThreshold: Infinity
+        inlineStyleThreshold: Infinity,
+        router: {
+            resolution: 'server'
+        }
     }
 }
 
