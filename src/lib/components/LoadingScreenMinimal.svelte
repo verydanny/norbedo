@@ -1,21 +1,3 @@
-<script lang="ts">
-    import { browser } from '$app/environment';
-</script>
-
-{#if browser}
-    <div class="fixed inset-0 flex items-center justify-center overflow-hidden bg-black">
-        <div class="scene">
-            <div class="text-3d">
-                {#each 'NORBEDO'.split('') as letter, i}
-                    <span class="letter" style="--index: {i}">
-                        {letter}
-                    </span>
-                {/each}
-            </div>
-        </div>
-    </div>
-{/if}
-
 <style>
     .scene {
         perspective: 1000px;
@@ -77,3 +59,21 @@
         }
     }
 </style>
+
+<script lang="ts">
+    import { browser } from '$app/environment'
+</script>
+
+{#if browser}
+    <div class="fixed inset-0 flex items-center justify-center overflow-hidden bg-black">
+        <div class="scene">
+            <div class="text-3d">
+                {#each 'NORBEDO'.split('') as letter, i}
+                    <span class="letter" style="--index: {i}">
+                        {letter}
+                    </span>
+                {/each}
+            </div>
+        </div>
+    </div>
+{/if}

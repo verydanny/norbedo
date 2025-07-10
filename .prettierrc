@@ -4,7 +4,7 @@
     "trailingComma": "none",
     "printWidth": 100,
     "tabWidth": 4,
-    "semi": true,
+    "semi": false,
     "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
     "htmlWhitespaceSensitivity": "ignore",
     "overrides": [
@@ -13,7 +13,6 @@
             "options": {
                 "parser": "svelte",
                 "svelteSortOrder": "options-styles-scripts-markup",
-                "svelteBracketNewLine": true,
                 "svelteAllowShorthand": true,
                 "svelteStrictMode": true,
                 "svelteIndentScriptAndStyle": true

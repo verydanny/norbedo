@@ -1,8 +1,8 @@
-import adapter from '@sveltejs/adapter-cloudflare';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import adapter from '@sveltejs/adapter-cloudflare'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
 function disableRunes(filename) {
-    return filename.includes('node_modules');
+    return filename.includes('node_modules')
 }
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -19,8 +19,8 @@ const config = {
     vitePlugin: {
         dynamicCompileOptions({ filename, compileOptions }) {
             if (disableRunes(filename) && compileOptions.runes) {
-                console.log('Disabling runes for', filename);
-                return { runes: false };
+                console.log('Disabling runes for', filename)
+                return { runes: false }
             }
         }
     },
@@ -33,6 +33,6 @@ const config = {
         }),
         inlineStyleThreshold: Infinity
     }
-};
+}
 
-export default config;
+export default config
