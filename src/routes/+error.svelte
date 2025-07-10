@@ -3,13 +3,12 @@
     import { onMount } from 'svelte'
     import { page } from '$app/state'
 
-    let leftEye: HTMLElement
-    let rightEye: HTMLElement
-
     const errorMessage = $derived(page.error?.message || 'Page not found')
     const errorDetails = $derived(page.error ? JSON.stringify(page.error, null, 0) : '')
     const statusCode = $derived(page.status || 404)
 
+    let leftEye: HTMLElement
+    let rightEye: HTMLElement
     let currentMouseX = $state(window.innerWidth * 0.6)
     let currentMouseY = $state(window.innerHeight * 0.4)
 
