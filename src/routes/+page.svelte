@@ -7,6 +7,7 @@
         <div class="card bg-base-100 card-xl w-full shadow-sm">
             <div class="card-body">
                 <LoadingScreenMinimal />
+                <h1 class="hidden" aria-level="1">Norbedo</h1>
             </div>
         </div>
     </div>

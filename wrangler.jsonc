@@ -8,8 +8,7 @@
     "compatibility_date": "2025-07-08",
     "compatibility_flags": ["nodejs_compat"],
     "observability": {
-        "enabled": true,
-        "head_sampling_rate": 1
+        "enabled": false
     },
     "assets": {
         "directory": ".svelte-kit/cloudflare",

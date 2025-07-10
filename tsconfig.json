@@ -28,7 +28,15 @@
         // Bundler mode
         "allowImportingTsExtensions": true,
         "assumeChangesOnlyAffectDirectDependencies": true,
-        "incremental": true
+        "incremental": true,
+
+        /// WSDAFDSAF
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "module": "esnext",
+        "noEmit": true,
+        "target": "ESNext"
     }
     // Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
     // except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
