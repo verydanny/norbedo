@@ -7,9 +7,13 @@
     },
     "compatibility_date": "2025-07-08",
     "compatibility_flags": ["nodejs_compat"],
+    "limits": {
+        "cpu_ms": 50,
+        "memory_mb": 128
+    },
     "observability": {
         "enabled": true,
-        "head_sampling_rate": 0.1
+        "head_sampling_rate": 0.01
     },
     "assets": {
         "directory": ".svelte-kit/cloudflare",

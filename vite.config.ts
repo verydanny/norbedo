@@ -12,8 +12,19 @@ export default defineConfig({
             ecma: 2020,
             format: {
                 comments: false
+            },
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+                pure_funcs: ['console.log'],
+                passes: 2
+            },
+            mangle: {
+                toplevel: true
             }
-        }
+        },
+        chunkSizeWarningLimit: 1000,
+        assetsInlineLimit: 4096
     },
     test: {
         projects: [
