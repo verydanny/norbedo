@@ -13,13 +13,17 @@
     let currentMouseY = $state(window.innerHeight * 0.4)
 
     const updateEyePosition = (clientX: number, clientY: number) => {
+        if (!leftEye || !rightEye) {
+            return
+        }
+
         ;[leftEye, rightEye].forEach((eye) => {
-            if (!eye) return
             const rect = eye.getBoundingClientRect()
             const eyeCenterX = rect.left + rect.width / 2
             const eyeCenterY = rect.top + rect.height / 2
             const angle = Math.atan2(clientY - eyeCenterY, clientX - eyeCenterX)
             const pupil = eye.querySelector('.pupil') as HTMLElement
+
             if (pupil) {
                 const distance = Math.min(rect.width * 0.2, rect.height * 0.2)
                 pupil.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`
