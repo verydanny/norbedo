@@ -2,10 +2,12 @@ import devtoolsJson from 'vite-plugin-devtools-json'
 import tailwindcss from '@tailwindcss/vite'
 import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig } from 'vitest/config'
+import { enhancedImages } from '@sveltejs/enhanced-img'
 import { FontaineTransform } from 'fontaine'
 
 export default defineConfig({
     plugins: [
+        enhancedImages(),
         tailwindcss(),
         sveltekit(),
         devtoolsJson(),

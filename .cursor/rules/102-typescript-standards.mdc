@@ -1,0 +1,38 @@
+---
+description: TypeScript coding standards and best practices
+globs: src/**/*.ts,src/**/*.svelte
+---
+
+# TypeScript Standards
+
+## Type Safety
+
+- Never use `any` type - use explicit types or `unknown`
+- Prefer interfaces over type aliases for object shapes
+- Use strict mode and enable all strict TypeScript options
+- Define return types for functions
+
+## Code Style
+
+- Use functional programming patterns over classes
+- Early returns for better readability
+- Descriptive variable names (isLoading, hasError)
+- Use const assertions where appropriate
+
+## Imports & Exports
+
+- Use path aliases (@ for src/) over relative imports
+- Named exports preferred over default exports
+- Group imports: libraries first, then local modules
+
+## Error Handling
+
+- Use proper error types and error boundaries
+- Handle edge cases at function start with guard clauses
+- Implement proper try/catch with specific error types
+
+## File Organization
+
+- One main export per file
+- Co-locate types with their usage
+- Use index files sparingly, prefer direct imports

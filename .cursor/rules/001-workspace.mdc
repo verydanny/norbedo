@@ -1,0 +1,28 @@
+---
+description: Core SvelteKit project definition with DaisyUI styling system
+globs: /**/*
+---
+
+# Norbedo - SvelteKit Project
+
+Core Architecture:
+
+- Svelte5 using runes based architecture
+- SvelteKit app with TypeScript
+- DaisyUI + Tailwind for styling
+- Component-based architecture in src/lib/components/
+- Routes in src/routes/ using SvelteKit file-based routing
+
+Key Directories:
+
+- src/lib/components/ - Reusable Svelte components
+- src/routes/ - SvelteKit pages and layouts
+- static/ - Static assets (fonts, images)
+
+Main Constraints:
+
+- Always use DaisyUI semantic colors (bg-primary, text-base-content, etc.)
+- Follow Svelte 5+ syntax and conventions
+- TypeScript for all logic
+- Mobile-first responsive design
+- Consistent component structure

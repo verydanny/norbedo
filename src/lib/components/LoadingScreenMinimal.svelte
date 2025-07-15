@@ -1,4 +1,4 @@
-<style>
+<style lang="css">
     .scene {
         perspective: 1000px;
     }
@@ -23,15 +23,13 @@
         font-size: 5rem;
         line-height: 1;
         font-weight: 900;
-        font-family: 'Helvetica Neue', sans-serif;
         color: #8b0e91;
-        text-transform: uppercase;
         transform-style: preserve-3d;
         animation: float 3s ease-in-out calc(var(--index) * 0.1s) infinite;
         position: relative;
         z-index: 10;
         /* Glow effect */
-        filter: drop-shadow(0 0 20px rgba(255, 69, 0, 0.6));
+        filter: drop-shadow(0 0 20px rgba(21, 10, 93, 0.6));
     }
 
     @media (max-width: 640px) {
@@ -60,20 +58,14 @@
     }
 </style>
 
-<script lang="ts">
-    import { browser } from '$app/environment'
-</script>
-
-{#if browser}
-    <div class="fixed inset-0 flex items-center justify-center overflow-hidden bg-black">
-        <div class="scene">
-            <div class="text-3d">
-                {#each 'NORBEDO'.split('') as letter, i}
-                    <span class="letter" style="--index: {i}">
-                        {letter}
-                    </span>
-                {/each}
-            </div>
+<div class="fixed inset-0 flex items-center justify-center overflow-hidden bg-black">
+    <div class="scene">
+        <div class="text-3d">
+            {#each 'norbedo'.split('') as letter, i}
+                <span class="letter" style="--index: {i}">
+                    {letter}
+                </span>
+            {/each}
         </div>
     </div>
-{/if}
+</div>

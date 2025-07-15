@@ -1,0 +1,38 @@
+---
+description: Svelte 5+ component standards and TypeScript conventions
+globs: src/**/*.svelte
+---
+
+# Svelte Component Standards
+
+## Component Structure
+
+- Use Svelte 5+ runes syntax ($state, $derived, $effect)
+- TypeScript for all logic and prop types
+- Named exports preferred over default exports
+- Script block first, then markup, then styles
+
+## Event Handling
+
+- Use new event syntax: onclick instead of on:click
+- Use descriptive handler names: handleSubmit, handleClick
+- Arrow functions for simple handlers
+
+## State Management
+
+- $state() for reactive variables
+- $derived() for computed values
+- $effect() for side effects (use sparingly)
+- Avoid $: reactive statements (Svelte 4 syntax)
+
+## Props and Types
+
+- Use $props() rune to extract props
+- Define TypeScript interfaces for complex props
+- Destructure props with defaults: { title = 'Default' }
+
+## Styling
+
+- Use DaisyUI classes following @003-daisyui-colors.mdc
+- Mobile-first responsive approach
+- Scoped styles in &lt;style&gt; blocks when needed

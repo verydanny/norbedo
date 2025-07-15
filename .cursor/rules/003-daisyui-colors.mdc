@@ -1,0 +1,244 @@
+---
+description: DaisyUI semantic color conversion guidelines for consistent theming
+globs: src/**/*.svelte,src/**/*.ts,src/**/*.css
+---
+
+# DaisyUI Color Conversion Rule
+
+When converting Tailwind CSS components to use DaisyUI semantic colors, follow these comprehensive mappings and patterns:
+
+## Background Color Conversions
+
+### Gray Scale Backgrounds
+
+- `bg-white` → `bg-base-100` (lightest surface, cards, modals, dropdowns)
+- `bg-gray-50` → `bg-base-100`
+- `bg-gray-100` → `bg-base-200` (slightly elevated surfaces, subtle backgrounds)
+- `bg-gray-200` → `bg-base-200`
+- `bg-gray-300` → `bg-base-300` (more elevated surfaces, input backgrounds, dividers)
+- `bg-gray-400` → `bg-base-300`
+- `bg-gray-500` → `bg-neutral` (neutral elements)
+- `bg-gray-600` → `bg-neutral`
+- `bg-gray-700` → `bg-base-300` (for input fields, hover states)
+- `bg-gray-800` → `bg-base-200` (main containers, headers, sidebars)
+- `bg-gray-900` → `bg-neutral` or `bg-base-300` (very dark containers)
+- `bg-black` → `bg-neutral`
+
+### Colored Backgrounds
+
+- `bg-blue-*` → `bg-primary` (main brand actions, active states)
+- `bg-indigo-*` → `bg-primary`
+- `bg-purple-*` → `bg-secondary` (secondary brand actions)
+- `bg-pink-*` → `bg-accent` (accent elements, highlights)
+- `bg-red-*` → `bg-error` (error states, destructive actions)
+- `bg-orange-*` → `bg-warning` (warning states, caution)
+- `bg-yellow-*` → `bg-warning`
+- `bg-green-*` → `bg-success` (success states, positive actions)
+- `bg-emerald-*` → `bg-success`
+- `bg-teal-*` → `bg-info` (informational states)
+- `bg-cyan-*` → `bg-info`
+
+## Text Color Conversions
+
+### Gray Scale Text
+
+- `text-white` → `text-base-content` (main text on base backgrounds)
+- `text-gray-50` → `text-base-content`
+- `text-gray-100` → `text-base-content`
+- `text-gray-300` → `text-base-content/70` (muted text, secondary text)
+- `text-gray-400` → `text-base-content/70` or `text-base-content/50` (very muted)
+- `text-gray-500` → `text-base-content/70`
+- `text-gray-600` → `text-base-content/80`
+- `text-gray-700` → `text-base-content` (main text on light backgrounds)
+- `text-gray-800` → `text-base-content`
+- `text-gray-900` → `text-base-content`
+- `text-black` → `text-base-content`
+
+### Colored Text
+
+- `text-blue-*` → `text-primary` (primary links, primary text)
+- `text-indigo-*` → `text-primary`
+- `text-purple-*` → `text-secondary`
+- `text-pink-*` → `text-accent`
+- `text-red-*` → `text-error`
+- `text-orange-*` → `text-warning`
+- `text-yellow-*` → `text-warning`
+- `text-green-*` → `text-success`
+- `text-emerald-*` → `text-success`
+- `text-teal-*` → `text-info`
+- `text-cyan-*` → `text-info`
+
+### Content-Specific Text Colors
+
+When text is on colored backgrounds, use corresponding content colors:
+
+- On `bg-primary` → use `text-primary-content`
+- On `bg-secondary` → use `text-secondary-content`
+- On `bg-accent` → use `text-accent-content`
+- On `bg-neutral` → use `text-neutral-content`
+- On `bg-error` → use `text-error-content`
+- On `bg-warning` → use `text-warning-content`
+- On `bg-success` → use `text-success-content`
+- On `bg-info` → use `text-info-content`
+
+## Border and Ring Colors
+
+### Borders
+
+- `border-white` → `border-base-content/10`
+- `border-gray-*` → `border-base-300` (most borders)
+- `border-black` → `border-base-content/20`
+- Colored borders follow same pattern as backgrounds:
+    - `border-blue-*` → `border-primary`
+    - `border-red-*` → `border-error`
+    - etc.
+
+### Focus Rings
+
+- `ring-white` → `ring-primary` (primary focus indicator)
+- `ring-blue-*` → `ring-primary`
+- `ring-gray-*` → `ring-base-content/20`
+- For ring offsets: `ring-offset-gray-800` → `ring-offset-base-200`
+
+### Divide Colors
+
+- `divide-gray-*` → `divide-base-300`
+- `divide-white` → `divide-base-content/10`
+
+## Interactive State Patterns
+
+### Hover States
+
+- `hover:bg-gray-*` → `hover:bg-base-300` (neutral hover)
+- `hover:bg-blue-*` → `hover:bg-primary` (primary hover)
+- `hover:text-white` → `hover:text-base-content`
+- `hover:text-gray-*` → `hover:text-base-content`
+
+### Focus States
+
+- `focus:ring-blue-*` → `focus:ring-primary`
+- `focus:bg-white` → `focus:bg-base-100`
+- `focus:text-gray-*` → `focus:text-base-content`
+
+### Active States
+
+- `bg-blue-*` (for active items) → `bg-primary text-primary-content`
+- `bg-gray-*` (for active items) → `bg-base-300 text-base-content`
+
+## Shadow and Effect Colors
+
+- `shadow-lg ring-1 ring-black/5` → `shadow-lg ring-1 ring-base-300`
+- `shadow-*` can remain as-is (shadows are theme-neutral)
+
+## Placeholder and Special Cases
+
+- `placeholder:text-gray-*` → `placeholder:text-base-content/50`
+- `placeholder-gray-*` → `placeholder-base-content/50`
+
+## Component-Specific Patterns
+
+### Navigation Components
+
+- Header/navbar backgrounds: `bg-base-200`
+- Active nav items: `bg-primary text-primary-content`
+- Inactive nav items: `text-base-content/70 hover:bg-base-300 hover:text-base-content`
+- Mobile menu button: `text-base-content/70 hover:bg-base-300 hover:text-base-content`
+
+### Form Components
+
+- Input backgrounds: `bg-base-300` (normal) → `focus:bg-base-100`
+- Input text: `text-base-content`
+- Input placeholders: `placeholder:text-base-content/50`
+- Form labels: `text-base-content`
+
+### Card/Modal Components
+
+- Card backgrounds: `bg-base-100`
+- Card borders: `border-base-300`
+- Modal overlays: can remain as `bg-black/50` or use `bg-neutral/50`
+
+### Button Components
+
+- Primary buttons: `bg-primary text-primary-content hover:bg-primary/90`
+- Secondary buttons: `bg-base-300 text-base-content hover:bg-base-200`
+- Ghost buttons: `text-base-content hover:bg-base-300`
+
+## Opacity Handling
+
+When using opacity modifiers, maintain them with DaisyUI colors:
+
+- `text-gray-400` → `text-base-content/70`
+- `bg-gray-800/50` → `bg-base-200/50`
+- `border-gray-300/20` → `border-base-300/20`
+
+## Dark Mode Considerations
+
+- NEVER use `dark:` prefixes with DaisyUI semantic colors
+- DaisyUI colors automatically adapt to dark/light themes
+- Remove all `dark:*` classes when converting to DaisyUI
+- If you need theme-specific overrides, use `data-theme` attributes instead
+
+## Best Practices
+
+1. Always prefer semantic colors over hardcoded Tailwind colors
+2. Use `*-content` colors for text on colored backgrounds
+3. Use opacity modifiers (`/70`, `/50`) for muted text instead of lighter gray shades
+4. For interactive elements, use `primary` for main actions, `secondary` for alternative actions
+5. Use `base-*` colors for layout and structural elements
+6. Use status colors (`error`, `warning`, `success`, `info`) for feedback and states
+7. Test components with different DaisyUI themes to ensure proper contrast
+8. Remove any hardcoded color values (`#hex`, `rgb()`, `hsl()`) in favor of semantic names
+
+## Comment Updates
+
+Update CSS comments to reflect new color usage:
+
+```html
+<!-- Before -->
+<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+
+<!-- After -->
+<!-- Current: "bg-primary text-primary-content", Default: "text-base-content/70 hover:bg-base-300 hover:text-base-content" -->
+```
+
+When applying this rule, convert ALL color-related classes in the component systematically, ensuring consistency and theme compatibility throughout.
+
+---
+
+description: DaisyUI semantic color conversion guidelines for consistent theming
+globs: src/**/\*.svelte,src/**/_.ts,src/\*\*/_.css
+
+---
+
+# DaisyUI Color Conversion Rule
+
+Convert Tailwind colors to DaisyUI semantic colors for theme consistency:
+
+## Background Colors
+
+- bg-white/gray-50/100 → bg-base-100 (cards, modals, dropdowns)
+- bg-gray-200/300 → bg-base-200 (elevated surfaces)
+- bg-gray-400/500/700 → bg-base-300 (inputs, hover states)
+- bg-gray-800/900 → bg-base-200 (headers, containers)
+- bg-blue-\* → bg-primary (main actions, active states)
+- bg-red-_ → bg-error, bg-green-_ → bg-success
+- bg-orange/yellow-_ → bg-warning, bg-teal/cyan-_ → bg-info
+
+## Text Colors
+
+- text-white/gray-\* → text-base-content (main text)
+- text-gray-300/400 → text-base-content/70 (muted text)
+- On colored backgrounds use text-\*-content (text-primary-content)
+
+## Interactive States
+
+- hover:bg-gray-\* → hover:bg-base-300
+- focus:ring-blue-\* → focus:ring-primary
+- Active nav items: bg-primary text-primary-content
+
+## Key Rules
+
+- Never use dark: prefixes with DaisyUI colors
+- Use opacity modifiers: text-base-content/70, bg-base-200/50
+- Remove hardcoded color values (#hex, rgb())
+- Update comments to reflect new color usage
