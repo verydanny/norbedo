@@ -9,8 +9,8 @@
 
     let leftEye: HTMLElement
     let rightEye: HTMLElement
-    let currentMouseX = $state(window.innerWidth * 0.6)
-    let currentMouseY = $state(window.innerHeight * 0.4)
+    let currentMouseX = $state(globalThis.innerWidth * 0.6)
+    let currentMouseY = $state(globalThis.innerHeight * 0.4)
 
     const updateEyePosition = (clientX: number, clientY: number) => {
         if (!leftEye || !rightEye) {
