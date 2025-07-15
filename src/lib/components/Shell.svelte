@@ -71,10 +71,10 @@
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2">
                     <div class="flex h-16 shrink-0 items-center">
-                        <img
+                        <enhanced:img
                             class="h-8 w-auto"
-                            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                            alt="Your Company"
+                            src="$lib/static/images/logos/mark.svg"
+                            alt="Norbedo"
                         />
                     </div>
                     <nav class="flex flex-1 flex-col">
@@ -288,10 +288,10 @@
             class="border-base-300 bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto border-r px-6"
         >
             <div class="flex h-16 shrink-0 items-center">
-                <img
+                <enhanced:img
                     class="h-8 w-auto"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
+                    src="$lib/static/images/logos/mark.svg"
+                    alt="Norbedo"
                 />
             </div>
             <nav class="flex flex-1 flex-col">
@@ -494,10 +494,10 @@
                             href="#top"
                             class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
                         >
-                            <img
+                            <enhanced:img
                                 class="bg-base-200 size-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt=""
+                                src="$lib/static/images/placeholders/tom.jpg"
+                                alt="Some Dude"
                             />
                             <span class="sr-only">Your profile</span>
                             <span aria-hidden="true">Tom Cook</span>
@@ -532,10 +532,10 @@
         <div class="text-base-content flex-1 text-sm/6 font-semibold">Dashboard</div>
         <a href="#top">
             <span class="sr-only">Your profile</span>
-            <img
+            <enhanced:img
                 class="bg-base-200 size-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
+                src="$lib/static/images/placeholders/tom.jpg"
+                alt="Tom Cook"
             />
         </a>
     </div>
