@@ -1,6 +1,58 @@
+@font-face {
+    font-family: 'Operator Mono';
+    src:
+        url('/fonts/OperatorMonoLig-Book.woff2') format('woff2'),
+        url('/fonts/OperatorMonoLig-Book.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Operator Mono';
+    src:
+        url('/fonts/OperatorMonoLig-BookItalic.woff2') format('woff2'),
+        url('/fonts/OperatorMonoLig-BookItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Operator Mono';
+    src:
+        url('/fonts/OperatorMonoLig-LightItalic.woff2') format('woff2'),
+        url('/fonts/OperatorMonoLig-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Operator Mono';
+    src:
+        url('/fonts/OperatorMonoLig-Light.woff2') format('woff2'),
+        url('/fonts/OperatorMonoLig-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
 @import 'tailwindcss';
 
-@plugin "daisyui";
+@theme {
+    --font-sans: 'Operator Mono', sans-serif;
+    --font-mono: 'Operator Mono', monospace;
+    --font-serif: 'Operator Mono', serif;
+    --font-display: 'Operator Mono', sans-serif;
+}
+
+@plugin "daisyui" {
+    themes: aqua --default;
+    root: ':root';
+    logs: false;
+    include: button, mockup;
+}
 
 @plugin "daisyui/theme" {
     name: 'aqua';
@@ -37,4 +89,22 @@
     --noise: 0;
 }
 
-@plugin "@tailwindcss/typography";
+/* Lightweight prose styles to replace @tailwindcss/typography */
+.prose {
+    color: var(--color-base-content);
+    max-width: 65ch;
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.prose-sm {
+    font-size: 0.875rem;
+    line-height: 1.71429;
+}
+
+@media (min-width: 48rem) {
+    .md\:prose-base {
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+}
