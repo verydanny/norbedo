@@ -53,9 +53,9 @@ export default defineConfig({
                 toplevel: true,
                 safari10: false
             }
-        },
-        chunkSizeWarningLimit: 4096,
-        assetsInlineLimit: 8192
+        }
+        // chunkSizeWarningLimit: 4096,
+        // assetsInlineLimit: 200
     },
     test: {
         projects: [
