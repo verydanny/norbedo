@@ -11,6 +11,8 @@
         "noPropertyAccessFromIndexSignature": true,
         "noUncheckedIndexedAccess": true,
         "noUnusedLocals": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
         "noUnusedParameters": true,
 
         "allowJs": true,
@@ -33,7 +35,7 @@
         /// WSDAFDSAF
         "isolatedModules": true,
         "jsx": "preserve",
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "module": "esnext",
         "noEmit": true,
         "target": "ESNext"

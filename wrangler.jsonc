@@ -2,11 +2,11 @@
     "name": "norbedo",
     "account_id": "f0a1a2b8737641fcda727d0bf64cb283",
     "main": "./.svelte-kit/cloudflare/_worker.js",
+    "compatibility_date": "2025-07-17",
+    "compatibility_flags": ["nodejs_compat"],
     "build": {
         "command": "bun run build"
     },
-    "compatibility_date": "2025-07-08",
-    "compatibility_flags": ["nodejs_compat"],
     "limits": {
         "cpu_ms": 50,
         "memory_mb": 128
@@ -19,10 +19,19 @@
         "directory": ".svelte-kit/cloudflare",
         "binding": "ASSETS"
     },
+    "r2_buckets": [
+        {
+            "binding": "ASSET_BUCKET",
+            "bucket_name": "norbedo-images"
+        }
+    ],
     "routes": [
         {
             "pattern": "norbedo.com/*",
             "zone_id": "58582690ed7f0e1ccd880051b8ac2608"
         }
-    ]
+    ],
+    "placement": {
+        "mode": "smart"
+    }
 }

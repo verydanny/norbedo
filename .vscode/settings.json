@@ -16,5 +16,6 @@
     "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "tailwindCSS.emmetCompletions": true
+    "tailwindCSS.emmetCompletions": true,
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

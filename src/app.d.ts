@@ -2,6 +2,7 @@
 // for information about these interfaces
 
 import type { Models } from 'node-appwrite'
+import '../worker-configuration.d.ts'
 
 declare global {
     namespace App {
@@ -11,7 +12,9 @@ declare global {
         }
         // interface PageData {}
         // interface PageState {}
-        // interface Platform {}
+        interface Platform {
+            env?: Cloudflare.Env
+        }
     }
 }
 
