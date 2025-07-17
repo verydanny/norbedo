@@ -22,7 +22,6 @@ const config = {
     vitePlugin: {
         dynamicCompileOptions({ filename, compileOptions }) {
             if (disableRunes(filename) && compileOptions.runes) {
-                console.log('Disabling runes for', filename)
                 return { runes: false }
             }
         }
@@ -31,6 +30,9 @@ const config = {
         output: {
             bundleStrategy: 'inline'
             // preloadStrategy: 'preload-mjs'
+        },
+        files: {
+            serviceWorker: 'src/sw'
         },
         adapter: adapter({
             config: './wrangler.jsonc'

@@ -1,20 +1,29 @@
 <script lang="ts">
     import '../app.css'
-    import { onMount } from 'svelte'
-    import Shell from '$lib/components/Shell.svelte'
+    import type { Snippet } from 'svelte'
+    import PrimaryColumn from '$lib/components/PrimaryColumnLayout.svelte'
+    import SecondaryColumn from '$lib/components/SecondaryColumnLayout.svelte'
     import { dev } from '$app/environment'
 
-    let { children } = $props()
+    let { children }: { children: Snippet } = $props()
 
-    onMount(() => {
-        if (dev) {
-            navigator.serviceWorker.register('/service-worker.js', {
-                type: 'module'
-            })
-        }
-    })
+    if ('serviceWorker' in navigator) {
+        addEventListener('load', () => {
+            if (dev) {
+                navigator.serviceWorker.register('/service-worker.js', {
+                    type: 'module'
+                })
+            } else {
+                navigator.serviceWorker.register('/service-worker.js')
+            }
+        })
+    }
 </script>
 
-<Shell>
+<PrimaryColumn>
     {@render children()}
-</Shell>
+</PrimaryColumn>
+
+<SecondaryColumn>
+    {@render children()}
+</SecondaryColumn>
