@@ -1,43 +1,4 @@
-@font-face {
-    font-family: 'Operator Mono';
-    src:
-        url('/fonts/OperatorMonoLig-Book.woff2') format('woff2'),
-        url('/fonts/OperatorMonoLig-Book.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Operator Mono';
-    src:
-        url('/fonts/OperatorMonoLig-BookItalic.woff2') format('woff2'),
-        url('/fonts/OperatorMonoLig-BookItalic.woff') format('woff');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Operator Mono';
-    src:
-        url('/fonts/OperatorMonoLig-LightItalic.woff2') format('woff2'),
-        url('/fonts/OperatorMonoLig-LightItalic.woff') format('woff');
-    font-weight: 300;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Operator Mono';
-    src:
-        url('/fonts/OperatorMonoLig-Light.woff2') format('woff2'),
-        url('/fonts/OperatorMonoLig-Light.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
-
+@import '$lib/styles/font.css';
 @import 'tailwindcss';
 
 @theme {

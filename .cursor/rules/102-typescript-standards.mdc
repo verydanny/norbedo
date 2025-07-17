@@ -18,6 +18,8 @@ globs: src/**/*.ts,src/**/*.svelte
 - Early returns for better readability
 - Descriptive variable names (isLoading, hasError)
 - Use const assertions where appropriate
+- Prefer arrow functions with concise syntax over function declarations
+- Use single-line arrow functions for simple operations
 
 ## Imports & Exports
 

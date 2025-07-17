@@ -1,6 +1,16 @@
 <script lang="ts">
     let { children } = $props()
+
+    let isOpen = $state(false)
+
+    const openSidebar = () => (isOpen = true)
+    const closeSidebar = () => (isOpen = false)
+
+    const handleKeydown = (event: KeyboardEvent) =>
+        event.key === 'Escape' && isOpen && closeSidebar()
 </script>
+
+<svelte:window onkeydown={handleKeydown} />
 
 <!--
   This example requires updating your template:
@@ -12,7 +22,12 @@
 -->
 <div>
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-    <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
+    <div
+        class="relative z-50 lg:hidden {isOpen ? 'pointer-events-auto' : 'pointer-events-none'}"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sidebar-label"
+    >
         <!--
         Off-canvas menu backdrop, show/hide based on off-canvas menu state.
   
@@ -23,9 +38,14 @@
           From: "opacity-100"
           To: "opacity-0"
       -->
-        <div class="bg-neutral/80 fixed inset-0" aria-hidden="true"></div>
+        <div
+            class="bg-neutral/80 fixed inset-0 transition-opacity duration-300 ease-linear {isOpen
+                ? 'opacity-100'
+                : 'opacity-0'}"
+            aria-hidden={!isOpen}
+        ></div>
 
-        <div class="fixed inset-0 flex">
+        <div class="fixed inset-0 flex" onclick={closeSidebar} aria-hidden={!isOpen}>
             <!--
           Off-canvas menu, show/hide based on off-canvas menu state.
   
@@ -36,7 +56,11 @@
             From: "translate-x-0"
             To: "-translate-x-full"
         -->
-            <div class="relative mr-16 flex w-full max-w-xs flex-1">
+            <div
+                class="relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out {isOpen
+                    ? 'translate-x-0'
+                    : '-translate-x-full'}"
+            >
                 <!--
             Close button, show/hide based on off-canvas menu state.
   
@@ -47,8 +71,17 @@
               From: "opacity-100"
               To: "opacity-0"
           -->
-                <div class="absolute top-0 left-full flex w-16 justify-center pt-5">
-                    <button type="button" class="-m-2.5 p-2.5">
+                <div
+                    class="absolute top-0 left-full flex w-16 justify-center pt-5 transition duration-300 ease-in-out {isOpen
+                        ? 'opacity-100'
+                        : 'opacity-0'}"
+                >
+                    <button
+                        type="button"
+                        class="-m-2.5 p-2.5"
+                        onclick={closeSidebar}
+                        aria-label="Close sidebar"
+                    >
                         <span class="sr-only">Close sidebar</span>
                         <svg
                             class="text-base-content size-6"
@@ -69,7 +102,10 @@
                 </div>
 
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
-                <div class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2">
+                <div
+                    class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2"
+                    id="sidebar-label"
+                >
                     <div class="flex h-16 shrink-0 items-center">
                         <enhanced:img
                             class="h-8 w-auto"
@@ -511,7 +547,12 @@
     <div
         class="bg-base-100 sticky top-0 z-40 flex items-center gap-x-6 px-4 py-4 shadow-xs sm:px-6 lg:hidden"
     >
-        <button type="button" class="text-base-content/70 -m-2.5 p-2.5 lg:hidden">
+        <button
+            type="button"
+            class="text-base-content/70 -m-2.5 p-2.5 lg:hidden"
+            onclick={openSidebar}
+            aria-label="Open sidebar"
+        >
             <span class="sr-only">Open sidebar</span>
             <svg
                 class="size-6"
