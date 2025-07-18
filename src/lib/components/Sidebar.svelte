@@ -143,19 +143,13 @@
     ></div>
 
     <div
-        bind:this={sidebarPanel}
-        role="button"
-        tabindex="0"
         class="fixed inset-0 z-10 flex w-full cursor-default"
         onclick={handleBackgroundInteraction}
-        onkeydown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                handleBackgroundInteraction(e)
-            }
-        }}
+        role="presentation"
+        aria-label="Sidebar"
     >
         <div
+            bind:this={sidebarPanel}
             class="touch-action-pan-y relative mr-16 flex w-full max-w-xs flex-1 transform {isOpen
                 ? 'translate-x-0'
                 : '-translate-x-full'} {isDragging
