@@ -5,6 +5,9 @@
     let touchStartX = 0
     let touchStartY = 0
     let swipeDirection: 'horizontal' | 'vertical' | null = null
+    let lastMoveX = 0
+    let lastMoveTime = 0
+    let velocity = 0
 
     let isOpen = $state(false)
     let isDragging = $state(false)
@@ -51,6 +54,11 @@
         touchStartY = e?.touches[0]?.clientY ?? 0
         isDragging = true
         swipeDirection = null
+
+        // Reset velocity tracking
+        lastMoveX = touchStartX
+        lastMoveTime = performance.now()
+        velocity = 0
     }
 
     const handleTouchMove = (e: TouchEvent) => {
@@ -66,12 +74,26 @@
         }
 
         if (swipeDirection === 'horizontal') {
-            e.preventDefault()
-
             const currentX = e?.touches[0]?.clientX ?? 0
-            const currentDeltaX = currentX - touchStartX
+            const now = performance.now()
+            const timeDelta = now - lastMoveTime
 
-            currentTranslateX = Math.max(-sidebarWidth, Math.min(0, currentDeltaX))
+            if (timeDelta > 0) {
+                const moveDelta = currentX - lastMoveX
+                velocity = moveDelta / timeDelta
+            }
+
+            lastMoveX = currentX
+            lastMoveTime = now
+
+            // Emulate iOS rubber band effect
+            if (deltaX > 0) {
+                // Dragging right from open position (overscroll)
+                currentTranslateX = Math.pow(deltaX, 0.7)
+            } else {
+                // Dragging left
+                currentTranslateX = deltaX
+            }
         }
     }
 
@@ -83,8 +105,9 @@
         isDragging = false
 
         if (swipeDirection === 'horizontal') {
-            // If swiped more than a 25% of the way, close the sidebar
-            if (currentTranslateX < -sidebarWidth / 4) {
+            const flickVelocity = -0.3 // px/ms
+            // If swiped more than a 33% of the way, or flicked, close the sidebar
+            if (velocity < flickVelocity || currentTranslateX < -sidebarWidth / 3) {
                 closeSidebar()
             }
 
@@ -94,6 +117,7 @@
         }
 
         swipeDirection = null
+        velocity = 0
     }
 </script>
 
@@ -126,9 +150,11 @@
         aria-label="Close sidebar"
     >
         <div
-            class="relative mr-16 flex w-full max-w-xs flex-1 transform {isOpen
+            class="touch-action-pan-y relative mr-16 flex w-full max-w-xs flex-1 transform {isOpen
                 ? 'translate-x-0'
-                : '-translate-x-full'} {isDragging ? '' : 'transition duration-300 ease-in-out'}"
+                : '-translate-x-full'} {isDragging
+                ? ''
+                : 'transition duration-300 ease-[cubic-bezier(0.32,0.72,0,1)]'}"
             style={isDragging ? `transform: translateX(${currentTranslateX}px)` : ''}
             ontouchstart={handleTouchStart}
             ontouchmove={handleTouchMove}
