@@ -31,11 +31,26 @@ export default defineConfig((env) => {
                   legalComments: 'none'
               }
             : {},
+        css: {
+            lightningcss: {
+                targets: {
+                    chrome: 135,
+                    safari: 18
+                }
+            }
+        },
         build: {
             minify: production ? 'esbuild' : false,
             chunkSizeWarningLimit: 4096,
             assetsInlineLimit: Infinity
         },
+        rollupOptions: production
+            ? {
+                  output: {
+                      inlineDynamicImports: true
+                  }
+              }
+            : {},
         test: {
             projects: [
                 {

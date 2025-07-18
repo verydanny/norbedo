@@ -1,4 +1,4 @@
-/* @import '$lib/styles/font.css'; */
+@import '$lib/styles/font.css';
 @import 'tailwindcss';
 
 @theme {
@@ -36,14 +36,6 @@
     --color-warning-content: oklch(98% 0.026 102.212);
     --color-error: oklch(64% 0.246 16.439);
     --color-error-content: oklch(96% 0.015 12.422);
-    --radius-selector: 0rem;
-    --radius-field: 0rem;
-    --radius-box: 0rem;
-    --size-selector: 0.3125rem;
-    --size-field: 0.3125rem;
-    --border: 1.5px;
-    --depth: 0;
-    --noise: 0;
 }
 
 @plugin "daisyui/theme" {
@@ -79,4 +71,10 @@
     --border: 1.5px;
     --depth: 0;
     --noise: 0;
+}
+
+/* iOS Safe Area Support */
+body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }

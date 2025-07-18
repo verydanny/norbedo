@@ -1,11 +1,100 @@
 <script lang="ts">
+    import { browser } from '$app/environment'
+
+    const sidebarWidth = 320 // Corresponds to max-w-xs (20rem)
+    let touchStartX = 0
+    let touchStartY = 0
+    let swipeDirection: 'horizontal' | 'vertical' | null = null
+
     let isOpen = $state(false)
+    let isDragging = $state(false)
+    let currentTranslateX = $state(0)
 
     const openSidebar = () => (isOpen = true)
     const closeSidebar = () => (isOpen = false)
 
     const handleKeydown = (event: KeyboardEvent) =>
         event.key === 'Escape' && isOpen && closeSidebar()
+
+    const handleBackgroundInteraction = (event: Event) => {
+        // Close sidebar if the click is on the background itself, not on the panel.
+        if (event.currentTarget === event.target) {
+            closeSidebar()
+        }
+    }
+
+    $effect(() => {
+        if (!browser) {
+            return
+        }
+
+        if (isOpen) {
+            document.body.classList.add('overflow-hidden')
+        } else {
+            document.body.classList.remove('overflow-hidden')
+        }
+
+        // Cleanup when the component is destroyed
+        return () => {
+            if (browser) {
+                document.body.classList.remove('overflow-hidden')
+            }
+        }
+    })
+
+    const handleTouchStart = (e: TouchEvent) => {
+        if (!isOpen) {
+            return
+        }
+
+        touchStartX = e?.touches[0]?.clientX ?? 0
+        touchStartY = e?.touches[0]?.clientY ?? 0
+        isDragging = true
+        swipeDirection = null
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+        if (!isDragging) {
+            return
+        }
+
+        const deltaX = (e?.touches[0]?.clientX ?? 0) - touchStartX
+        const deltaY = (e?.touches[0]?.clientY ?? 0) - touchStartY
+
+        if (swipeDirection === null) {
+            swipeDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical'
+        }
+
+        if (swipeDirection === 'horizontal') {
+            e.preventDefault()
+
+            const currentX = e?.touches[0]?.clientX ?? 0
+            const currentDeltaX = currentX - touchStartX
+
+            currentTranslateX = Math.max(-sidebarWidth, Math.min(0, currentDeltaX))
+        }
+    }
+
+    const handleTouchEnd = () => {
+        if (!isDragging) {
+            return
+        }
+
+        isDragging = false
+
+        if (swipeDirection === 'horizontal') {
+            // If swiped more than a 25% of the way, close the sidebar
+            if (currentTranslateX < -sidebarWidth / 4) {
+                closeSidebar()
+            }
+
+            // Reset translation. The element will animate to its final state (open or closed)
+            // because the transition class is re-applied.
+            currentTranslateX = 0
+        }
+
+        swipeDirection = null
+    }
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -21,14 +110,29 @@
             ? 'opacity-100'
             : 'opacity-0'}"
         aria-hidden="true"
-        onclick={closeSidebar}
     ></div>
 
-    <div class="fixed inset-0 flex">
+    <div
+        role="button"
+        tabindex="0"
+        class="fixed inset-0 flex w-full cursor-default"
+        onclick={handleBackgroundInteraction}
+        onkeydown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                handleBackgroundInteraction(e)
+            }
+        }}
+        aria-label="Close sidebar"
+    >
         <div
-            class="relative mr-16 flex w-full max-w-xs flex-1 transform transition duration-300 ease-in-out {isOpen
+            class="relative mr-16 flex w-full max-w-xs flex-1 transform {isOpen
                 ? 'translate-x-0'
-                : '-translate-x-full'}"
+                : '-translate-x-full'} {isDragging ? '' : 'transition duration-300 ease-in-out'}"
+            style={isDragging ? `transform: translateX(${currentTranslateX}px)` : ''}
+            ontouchstart={handleTouchStart}
+            ontouchmove={handleTouchMove}
+            ontouchend={handleTouchEnd}
         >
             <div
                 class="absolute top-0 left-full flex w-16 justify-center pt-5 transition duration-300 ease-in-out {isOpen
@@ -66,7 +170,12 @@
                 id="sidebar-label"
             >
                 <div class="flex h-16 shrink-0 items-center justify-between">
-                    <img class="h-8 w-auto" src="/images/logos/mark.svg" alt="Norbedo" />
+                    <enhanced:img
+                        class="h-8 w-auto"
+                        src="$lib/assets/images/logos/mark.svg"
+                        alt="Norbedo"
+                        loading="lazy"
+                    />
                 </div>
                 <nav class="flex flex-1 flex-col">
                     <ul role="list" class="flex flex-1 flex-col gap-y-7">
@@ -278,9 +387,9 @@
                                 class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
                                 onclick={closeSidebar}
                             >
-                                <img
+                                <enhanced:img
                                     class="bg-base-200 size-8 rounded-full"
-                                    src="/images/placeholders/tom.jpg"
+                                    src="$lib/assets/images/placeholders/tom.jpg"
                                     alt="Some Dude"
                                 />
                                 <span class="sr-only">Your profile</span>
@@ -301,7 +410,12 @@
         class="border-base-300 bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto border-r px-6"
     >
         <div class="flex h-16 shrink-0 items-center">
-            <img class="h-8 w-auto" src="/images/logos/mark.svg" alt="Norbedo" />
+            <enhanced:img
+                class="h-8 w-auto"
+                src="$lib/assets/images/logos/mark.svg"
+                alt="Norbedo"
+                loading="lazy"
+            />
         </div>
         <nav class="flex flex-1 flex-col">
             <ul role="list" class="flex flex-1 flex-col gap-y-7">
@@ -503,9 +617,9 @@
                         href="#top"
                         class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
                     >
-                        <img
+                        <enhanced:img
                             class="bg-base-200 size-8 rounded-full"
-                            src="/images/placeholders/tom.jpg"
+                            src="$lib/assets/images/placeholders/tom.jpg"
                             alt="Some Dude"
                         />
                         <span class="sr-only">Your profile</span>
@@ -546,9 +660,9 @@
     <div class="text-base-content flex-1 text-sm/6 font-semibold">Fepis Norbedo</div>
     <a href="#top">
         <span class="sr-only">Your profile</span>
-        <img
+        <enhanced:img
             class="bg-base-200 size-8 rounded-full"
-            src="/images/placeholders/tom.jpg"
+            src="$lib/assets/images/placeholders/tom.jpg"
             alt="Tom Cook"
         />
     </a>

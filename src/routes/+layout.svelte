@@ -7,7 +7,7 @@
 
     let { children }: { children: Snippet } = $props()
 
-    if ('serviceWorker' in navigator) {
+    if (typeof navigator !== 'undefined' && 'serviceWorker' in navigator) {
         addEventListener('load', () => {
             if (dev) {
                 navigator.serviceWorker.register('/service-worker.js', {
