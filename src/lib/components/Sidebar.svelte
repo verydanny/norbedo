@@ -1,7 +1,6 @@
 <script lang="ts">
     import { browser } from '$app/environment'
 
-    const sidebarWidth = 320 // Corresponds to max-w-xs (20rem)
     let touchStartX = 0
     let touchStartY = 0
     let swipeDirection: 'horizontal' | 'vertical' | null = null
@@ -12,6 +11,9 @@
     let isOpen = $state(false)
     let isDragging = $state(false)
     let currentTranslateX = $state(0)
+
+    let sidebarWidth = $state(320)
+    let sidebarPanel: HTMLDivElement | undefined
 
     const openSidebar = () => (isOpen = true)
     const closeSidebar = () => (isOpen = false)
@@ -29,6 +31,10 @@
     $effect(() => {
         if (!browser) {
             return
+        }
+
+        if (sidebarPanel) {
+            sidebarWidth = sidebarPanel.clientWidth
         }
 
         if (isOpen) {
@@ -137,9 +143,10 @@
     ></div>
 
     <div
+        bind:this={sidebarPanel}
         role="button"
         tabindex="0"
-        class="fixed inset-0 flex w-full cursor-default"
+        class="fixed inset-0 z-10 flex w-full cursor-default"
         onclick={handleBackgroundInteraction}
         onkeydown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -147,7 +154,6 @@
                 handleBackgroundInteraction(e)
             }
         }}
-        aria-label="Close sidebar"
     >
         <div
             class="touch-action-pan-y relative mr-16 flex w-full max-w-xs flex-1 transform {isOpen
@@ -167,7 +173,7 @@
             >
                 <button
                     type="button"
-                    class="-m-2.5 p-2.5"
+                    class="z-20 -m-2.5 p-2.5"
                     onclick={closeSidebar}
                     aria-label="Close sidebar"
                 >
