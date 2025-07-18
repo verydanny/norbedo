@@ -4,7 +4,6 @@ import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig } from 'vitest/config'
 import { enhancedImages } from '@sveltejs/enhanced-img'
 import { FontaineTransform } from 'fontaine'
-import { Features } from 'lightningcss'
 
 export default defineConfig((env) => {
     const production = env.mode === 'production'
@@ -42,6 +41,7 @@ export default defineConfig((env) => {
         },
         build: {
             minify: production ? 'esbuild' : false,
+            cssMinify: 'lightningcss',
             chunkSizeWarningLimit: 4096,
             assetsInlineLimit: Infinity
         },
