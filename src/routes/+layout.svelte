@@ -25,5 +25,5 @@
 </PrimaryColumn>
 
 <SecondaryColumn>
-    {@render children()}
+    <p>Secondary column</p>
 </SecondaryColumn>

@@ -1,6 +1,7 @@
 import { zValidator } from '@hono/zod-validator'
 import { Hono } from 'hono'
 import { z } from 'zod'
+import { authentication } from './authentication'
 
 export const Task = z.object({
     id: z.uuid(),
@@ -66,6 +67,7 @@ export const router = new Hono()
         tasks = tasks.filter((task) => task.id !== id)
         return c.json({ message: 'Task deleted' })
     })
+    .route('/auth', authentication)
 
 export const api = new Hono().route('/api', router)
 

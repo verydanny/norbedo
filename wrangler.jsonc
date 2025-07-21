@@ -27,5 +27,10 @@
     ],
     "placement": {
         "mode": "smart"
+    },
+    "vars": {
+        "SESSION_COOKIE_PREFIX": "a_session_",
+        "PUBLIC_APPWRITE_API_ENDPOINT": "https://syd.cloud.appwrite.io/v1",
+        "PUBLIC_APPWRITE_PROJECT_ID": "norbedo"
     }
 }
