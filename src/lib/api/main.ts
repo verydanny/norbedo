@@ -11,7 +11,6 @@ export const Task = z.object({
 export type Task = z.infer<typeof Task>
 
 export const TaskCreateInput = Task.pick({ name: true })
-
 export type TaskCreateInput = z.infer<typeof TaskCreateInput>
 
 export const TaskParam = Task.pick({ id: true })

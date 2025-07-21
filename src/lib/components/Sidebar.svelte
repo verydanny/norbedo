@@ -196,9 +196,9 @@
                 id="sidebar-label"
             >
                 <div class="flex h-16 shrink-0 items-center justify-between">
-                    <enhanced:img
+                    <img
                         class="h-8 w-auto"
-                        src="$lib/assets/images/logos/mark.svg"
+                        src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/mark.svg"
                         alt="Norbedo"
                         loading="lazy"
                     />
@@ -413,9 +413,9 @@
                                 class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
                                 onclick={closeSidebar}
                             >
-                                <enhanced:img
+                                <img
                                     class="bg-base-200 size-8 rounded-full"
-                                    src="$lib/assets/images/placeholders/tom.jpg"
+                                    src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/tom.jpg"
                                     alt="Some Dude"
                                 />
                                 <span class="sr-only">Your profile</span>
@@ -436,9 +436,9 @@
         class="border-base-300 bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto border-r px-6"
     >
         <div class="flex h-16 shrink-0 items-center">
-            <enhanced:img
+            <img
                 class="h-8 w-auto"
-                src="$lib/assets/images/logos/mark.svg"
+                src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/mark.svg"
                 alt="Norbedo"
                 loading="lazy"
             />
@@ -643,9 +643,9 @@
                         href="#top"
                         class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
                     >
-                        <enhanced:img
+                        <img
                             class="bg-base-200 size-8 rounded-full"
-                            src="$lib/assets/images/placeholders/tom.jpg"
+                            src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/tom.jpg"
                             alt="Some Dude"
                         />
                         <span class="sr-only">Your profile</span>
@@ -686,9 +686,9 @@
     <div class="text-base-content flex-1 text-sm/6 font-semibold">Fepis Norbedo</div>
     <a href="#top">
         <span class="sr-only">Your profile</span>
-        <enhanced:img
+        <img
             class="bg-base-200 size-8 rounded-full"
-            src="$lib/assets/images/placeholders/tom.jpg"
+            src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/tom.jpg"
             alt="Tom Cook"
         />
     </a>

@@ -5,7 +5,7 @@
                 <div class="flex shrink-0 items-center">
                     <img
                         class="h-8 w-auto"
-                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                        src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/mark.svg"
                         alt="Your Company"
                     />
                 </div>

@@ -28,7 +28,7 @@ const config = {
     },
     kit: {
         output: {
-            bundleStrategy: 'single'
+            bundleStrategy: 'inline'
         },
         files: {
             serviceWorker: 'src/sw'

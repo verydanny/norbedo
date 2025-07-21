@@ -19,12 +19,6 @@
         "directory": ".svelte-kit/cloudflare",
         "binding": "ASSETS"
     },
-    "r2_buckets": [
-        {
-            "binding": "ASSET_BUCKET",
-            "bucket_name": "norbedo-images"
-        }
-    ],
     "routes": [
         {
             "pattern": "norbedo.com/*",
