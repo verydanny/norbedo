@@ -4,12 +4,15 @@ import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig } from 'vitest/config'
 import { enhancedImages } from '@sveltejs/enhanced-img'
 import { FontaineTransform } from 'fontaine'
+// import { analyzer } from 'vite-bundle-analyzer'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig((env) => {
     const production = env.mode === 'production'
 
     return {
         plugins: [
+            visualizer(),
             enhancedImages(),
             sveltekit(),
             tailwindcss(),
@@ -40,6 +43,10 @@ export default defineConfig((env) => {
             }
         },
         build: {
+            modulePreload: {
+                polyfill: false
+            },
+            target: 'esnext',
             minify: production ? 'esbuild' : false,
             cssMinify: 'lightningcss',
             chunkSizeWarningLimit: 4096,
