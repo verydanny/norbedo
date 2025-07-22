@@ -1,15 +1,15 @@
 @font-face {
     font-family: 'Operator Mono';
-    src: url('https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/OperatorMonoLig-Book.woff2')
+    src: url('https://storage.norbedo.com/storage/uploads/app-app/assets/OperatorMonoLig-Book.woff2')
         format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
-@font-face {
+/* @font-face {
     font-family: 'Operator Mono';
-    src: url('https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/OperatorMonoLig-BookItalic.woff2')
+    src: url('https://storage.norbedo.com/storage/uploads/app-app/assets/OperatorMonoLig-BookItalic.woff2')
         format('woff2');
     font-weight: normal;
     font-style: italic;
@@ -18,7 +18,7 @@
 
 @font-face {
     font-family: 'Operator Mono';
-    src: url('https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/OperatorMonoLig-LightItalic.woff2')
+    src: url('https://storage.norbedo.com/storage/uploads/app-app/assets/OperatorMonoLig-LightItalic.woff2')
         format('woff2');
     font-weight: 300;
     font-style: italic;
@@ -27,12 +27,12 @@
 
 @font-face {
     font-family: 'Operator Mono';
-    src: url('https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/OperatorMonoLig-Light.woff2')
+    src: url('https://storage.norbedo.com/storage/uploads/app-app/assets/OperatorMonoLig-Light.woff2')
         format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
-}
+} */
 
 @import 'tailwindcss';
 

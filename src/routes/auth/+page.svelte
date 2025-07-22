@@ -1,7 +1,8 @@
-<!-- <input id="email" name="email" placeholder="Email" type="email" />
-    <input id="password" name="password" placeholder="Password" type="password" />
-    <input id="name" name="name" placeholder="Name" type="text" />
-    <button type="submit">Sign up</button> -->
+<script lang="ts">
+    let { data } = $props()
+
+    const { signin } = $derived(data)
+</script>
 
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -11,12 +12,12 @@
             class="mx-auto h-10 w-auto"
         />
         <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
-            Sign in to your account
+            {signin ? 'Sign in to your account' : 'Sign up for an account'}
         </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form action="?/signup" method="POST" class="space-y-6">
+        <form action={signin ? '?/signin' : '?/signup'} method="POST" class="space-y-6">
             <div>
                 <label for="email" class="block text-sm/6 font-medium text-white">
                     Email address
@@ -61,15 +62,19 @@
                     type="submit"
                     class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                 >
-                    Sign in
+                    {signin ? 'Sign in' : 'Sign up'}
                 </button>
             </div>
         </form>
 
         <p class="mt-10 text-center text-sm/6 text-gray-400">
-            Not a member?
-            <a href="#top" class="font-semibold text-indigo-400 hover:text-indigo-300">
-                Start a 14 day free trial
+            {signin ? 'Not a member?' : 'Already have an account?'}
+            <a
+                href={signin ? '/auth' : '/auth?signin'}
+                class="font-semibold text-indigo-400 hover:text-indigo-300"
+                data-sveltekit-preload-data
+            >
+                {signin ? 'Sign up' : 'Sign in'}
             </a>
         </p>
     </div>

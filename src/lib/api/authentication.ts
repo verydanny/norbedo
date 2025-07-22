@@ -1,4 +1,4 @@
-import { Hono } from 'hono'
+import { Hono } from 'hono/tiny'
 import { setCookie } from 'hono/cookie'
 import { zValidator } from '@hono/zod-validator'
 import { SESSION_COOKIE_PREFIX } from '$env/static/private'
@@ -10,16 +10,13 @@ import { ID } from 'node-appwrite'
 export const COOKIE_NAME = SESSION_COOKIE_PREFIX + PUBLIC_APPWRITE_PROJECT_ID
 export const COOKIE_NAME_LEGACY = COOKIE_NAME + '_legacy'
 
-export const authentication = new Hono().post(
-    '/login',
-    zValidator(
-        'json',
-        z.object({
-            email: z.email(),
-            password: z.string().min(8)
-        })
-    ),
-    async (c) => {
+const emailPasswordSchema = z.object({
+    email: z.email(),
+    password: z.string().min(8)
+})
+
+export const authentication = new Hono()
+    .post('/signup', zValidator('json', emailPasswordSchema), async (c) => {
         const body = c.req.valid('json')
 
         const { account } = createAdminAppwriteClient()
@@ -32,7 +29,53 @@ export const authentication = new Hono().post(
                 sameSite: 'strict',
                 expires: new Date(session.expire),
                 secure: true,
-                path: '/'
+                path: '/',
+                httpOnly: true
+            })
+            setCookie(c, COOKIE_NAME_LEGACY, session.secret, {
+                sameSite: 'strict',
+                expires: new Date(session.expire),
+                secure: true,
+                path: '/',
+                httpOnly: true
+            })
+
+            return c.json(
+                {
+                    success: true
+                },
+                200
+            )
+        } catch (error) {
+            return c.json(
+                {
+                    error: 'Invalid email or password'
+                },
+                401
+            )
+        }
+    })
+    .post('/signin', zValidator('json', emailPasswordSchema), async (c) => {
+        const body = c.req.valid('json')
+
+        const { account } = createAdminAppwriteClient()
+
+        try {
+            const session = await account.createEmailPasswordSession(body.email, body.password)
+
+            setCookie(c, COOKIE_NAME, session.secret, {
+                sameSite: 'strict',
+                expires: new Date(session.expire),
+                secure: true,
+                path: '/',
+                httpOnly: true
+            })
+            setCookie(c, COOKIE_NAME_LEGACY, session.secret, {
+                sameSite: 'strict',
+                expires: new Date(session.expire),
+                secure: true,
+                path: '/',
+                httpOnly: true
             })
 
             return c.json(
@@ -43,6 +86,7 @@ export const authentication = new Hono().post(
             )
         } catch (error) {
             console.error(error)
+
             return c.json(
                 {
                     error: 'Invalid email or password'
@@ -50,5 +94,4 @@ export const authentication = new Hono().post(
                 401
             )
         }
-    }
-)
+    })

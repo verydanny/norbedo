@@ -40,8 +40,14 @@ sw.addEventListener('fetch', (event) => {
     // ignore POST requests etc
     if (event.request.method !== 'GET') return
 
+    const url = new URL(event.request.url)
+
+    // Don't intercept external requests (like fonts from R2 bucket)
+    if (url.origin !== location.origin) {
+        return
+    }
+
     async function respond() {
-        const url = new URL(event.request.url)
         const cache = await caches.open(CACHE)
 
         // `build`/`files` can always be served from the cache

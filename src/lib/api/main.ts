@@ -1,5 +1,5 @@
 import { zValidator } from '@hono/zod-validator'
-import { Hono } from 'hono'
+import { Hono } from 'hono/tiny'
 import { z } from 'zod'
 import { authentication } from './authentication'
 
