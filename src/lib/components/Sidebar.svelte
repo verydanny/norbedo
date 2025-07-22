@@ -195,7 +195,7 @@
                 class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2"
                 id="sidebar-label"
             >
-                <a href="/" data-sveltekit-preload-data>
+                <a href="/" data-sveltekit-preload-data onclick={closeSidebar}>
                     <div class="flex h-16 shrink-0 items-center justify-between">
                         <img
                             class="h-8 w-auto"
