@@ -195,23 +195,26 @@
                 class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2"
                 id="sidebar-label"
             >
-                <div class="flex h-16 shrink-0 items-center justify-between">
-                    <img
-                        class="h-8 w-auto"
-                        src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/mark.svg"
-                        alt="Norbedo"
-                        loading="lazy"
-                    />
-                </div>
+                <a href="/" data-sveltekit-preload-data>
+                    <div class="flex h-16 shrink-0 items-center justify-between">
+                        <img
+                            class="h-8 w-auto"
+                            src="https://storage.norbedo.com/storage/uploads/app-app/assets/mark.svg"
+                            alt="Norbedo"
+                            loading="lazy"
+                        />
+                    </div>
+                </a>
                 <nav class="flex flex-1 flex-col">
                     <ul role="list" class="flex flex-1 flex-col gap-y-7">
                         <li>
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li>
                                     <a
-                                        href="#top"
+                                        href="/"
                                         class="group bg-primary text-primary-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                                         onclick={closeSidebar}
+                                        data-sveltekit-preload-data
                                     >
                                         <svg
                                             class="text-primary-content size-6 shrink-0"
@@ -228,10 +231,10 @@
                                                 d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                                             ></path>
                                         </svg>
-                                        Dashboard
+                                        Home
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a
                                         href="#top"
                                         class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
@@ -355,15 +358,13 @@
                                         </svg>
                                         Reports
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
                         </li>
                         <li>
-                            <div class="text-base-content/50 text-xs/6 font-semibold">
-                                Your teams
-                            </div>
+                            <div class="text-base-content/50 text-xs/6 font-semibold">Actions</div>
                             <ul role="list" class="-mx-2 mt-2 space-y-1">
-                                <li>
+                                <!-- <li>
                                     <a
                                         href="#top"
                                         class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
@@ -390,24 +391,24 @@
                                         </span>
                                         <span class="truncate">Tailwind Labs</span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <a
-                                        href="#top"
+                                        href="/auth"
                                         class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                                         onclick={closeSidebar}
                                     >
                                         <span
                                             class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"
                                         >
-                                            W
+                                            S
                                         </span>
-                                        <span class="truncate">Workcation</span>
+                                        <span class="truncate">Sign in</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="-mx-6 mt-auto">
+                        <!-- <li class="-mx-6 mt-auto">
                             <a
                                 href="#top"
                                 class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
@@ -415,13 +416,13 @@
                             >
                                 <img
                                     class="bg-base-200 size-8 rounded-full"
-                                    src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/tom.jpg"
+                                    src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
                                     alt="Some Dude"
                                 />
                                 <span class="sr-only">Your profile</span>
                                 <span aria-hidden="true">Tom Cook</span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </nav>
             </div>
@@ -435,14 +436,16 @@
     <div
         class="border-base-300 bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto border-r px-6"
     >
-        <div class="flex h-16 shrink-0 items-center">
-            <img
-                class="h-8 w-auto"
-                src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/mark.svg"
-                alt="Norbedo"
-                loading="lazy"
-            />
-        </div>
+        <a href="/" data-sveltekit-preload-data>
+            <div class="flex h-16 shrink-0 items-center">
+                <img
+                    class="h-8 w-auto"
+                    src="https://storage.norbedo.com/storage/uploads/app-app/assets/mark.svg"
+                    alt="Norbedo"
+                    loading="lazy"
+                />
+            </div>
+        </a>
         <nav class="flex flex-1 flex-col">
             <ul role="list" class="flex flex-1 flex-col gap-y-7">
                 <li>
@@ -450,8 +453,9 @@
                         <li>
                             <!-- Current: "bg-primary text-primary-content", Default: "text-base-content/70 hover:bg-base-300 hover:text-base-content" -->
                             <a
-                                href="#top"
+                                href="/"
                                 class="group bg-primary text-primary-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                                data-sveltekit-preload-data
                             >
                                 <svg
                                     class="text-primary-content size-6 shrink-0"
@@ -468,10 +472,10 @@
                                         d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                                     ></path>
                                 </svg>
-                                Dashboard
+                                Home
                             </a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a
                                 href="#top"
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
@@ -590,14 +594,13 @@
                                 </svg>
                                 Reports
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
                 <li>
-                    <div class="text-base-content/50 text-xs/6 font-semibold">Your teams</div>
+                    <div class="text-base-content/50 text-xs/6 font-semibold">Actions</div>
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
-                        <li>
-                            <!-- Current: "bg-primary text-primary-content", Default: "text-base-content/70 hover:bg-base-300 hover:text-base-content" -->
+                        <!-- <li>
                             <a
                                 href="#top"
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
@@ -622,30 +625,32 @@
                                 </span>
                                 <span class="truncate">Tailwind Labs</span>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a
-                                href="#top"
+                                href="/auth"
+                                data-sveltekit-preload-data
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                             >
                                 <span
                                     class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"
                                 >
-                                    W
+                                    S
                                 </span>
-                                <span class="truncate">Workcation</span>
+                                <span class="truncate">Sign in</span>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="-mx-6 mt-auto">
                     <a
-                        href="#top"
+                        href="/account"
+                        data-sveltekit-preload-data
                         class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
                     >
                         <img
                             class="bg-base-200 size-8 rounded-full"
-                            src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/tom.jpg"
+                            src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
                             alt="Some Dude"
                         />
                         <span class="sr-only">Your profile</span>
@@ -683,13 +688,13 @@
             ></path>
         </svg>
     </button>
-    <div class="text-base-content flex-1 text-sm/6 font-semibold">Fepis Norbedo</div>
-    <a href="#top">
-        <span class="sr-only">Your profile</span>
+    <div class="text-base-content flex-1 text-sm/6 font-semibold"></div>
+    <a href="/account" data-sveltekit-preload-data>
+        <span class="sr-only">Profile</span>
         <img
             class="bg-base-200 size-8 rounded-full"
-            src="https://pub-d8f4822e3eb64ba192c695e6d256bd35.r2.dev/storage/uploads/app-app/assets/tom.jpg"
-            alt="Tom Cook"
+            src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
+            alt="Tom"
         />
     </a>
 </div>

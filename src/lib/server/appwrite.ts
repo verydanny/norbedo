@@ -35,12 +35,16 @@ export function createAdminAppwriteClient() {
     }
 }
 
+export const getSession = (event: RequestEvent) => {
+    return event.cookies.get(SESSION_COOKIE || COOKIE_NAME_LEGACY)
+}
+
 export function createUserAppwriteClient(event: RequestEvent) {
     const client = new Client()
         .setEndpoint(PUBLIC_APPWRITE_API_ENDPOINT)
         .setProject(PUBLIC_APPWRITE_PROJECT_ID)
 
-    const session = event.cookies.get(SESSION_COOKIE || COOKIE_NAME_LEGACY)
+    const session = getSession(event)
     if (!session) {
         throw new Error('No session found')
     }

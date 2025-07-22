@@ -5,13 +5,22 @@ import {
 } from '$lib/server/appwrite.js'
 import { redirect } from '@sveltejs/kit'
 
-export async function load({ locals }) {
-    // Logged out users can't access this page.
-    if (!locals.user) redirect(302, '/auth')
+export async function load(event) {
+    try {
+        const { account } = createUserAppwriteClient(event)
+        const user = await account.get()
 
-    // Pass the stored user local to the page.
-    return {
-        user: locals.user
+        if (!user) {
+            redirect(302, '/auth')
+        }
+
+        // Pass the stored user local to the page.
+        return {
+            user
+        }
+    } catch (error) {
+        console.error(error)
+        redirect(302, '/auth')
     }
 }
 
