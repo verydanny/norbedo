@@ -1,11 +1,11 @@
-@font-face {
+/* @font-face {
     font-family: 'Operator Mono';
     src: url('https://storage.norbedo.com/storage/uploads/app-app/assets/OperatorMonoLig-Book.woff2')
         format('woff2');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-}
+} */
 
 /* @font-face {
     font-family: 'Operator Mono';
@@ -37,10 +37,8 @@
 @import 'tailwindcss';
 
 @theme {
-    --font-sans: 'Operator Mono', sans-serif;
-    --font-mono: 'Operator Mono', monospace;
-    --font-serif: 'Operator Mono', serif;
-    --font-display: 'Operator Mono', sans-serif;
+    --font-sans: 'Helvetica Neue', BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --font-display: 'Helvetica Neue', BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 }
 
 @plugin "daisyui" {

@@ -1,7 +1,5 @@
 <script lang="ts">
     import LoadingScreenMinimal from '$lib/components/LoadingScreenMinimal.svelte'
-
-    let { data } = $props()
 </script>
 
 <svelte:head>
@@ -14,7 +12,6 @@
             <div class="card-body">
                 <LoadingScreenMinimal />
                 <h1 class="hidden" aria-level="1">Norbedo</h1>
-                <pre>{JSON.stringify(data, null, 2)}</pre>
             </div>
         </div>
     </div>

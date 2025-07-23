@@ -1,18 +1,12 @@
 import { makeClient } from '$lib/api/make-client.ts'
-import { getSession } from '$lib/server/appwrite'
+import { getSession } from '$lib/server/appwrite.ts'
 import { fail, redirect } from '@sveltejs/kit'
 
-export const load = async (event) => {
+export const load = (event) => {
     const session = getSession(event)
 
     if (session) {
         redirect(302, '/account')
-    }
-
-    const { searchParams } = event.url
-
-    return {
-        signin: searchParams.get('signin') !== null
     }
 }
 

@@ -1,10 +1,21 @@
 <script lang="ts">
-    import { goto } from '$app/navigation'
     import { enhance } from '$app/forms'
+    import { afterNavigate, beforeNavigate } from '$app/navigation'
+    import { page } from '$app/state'
+    import type { RouteParams } from './$types'
 
-    let { data } = $props()
-    let signin = $state(data.signin)
+    const params = $derived(page.params as RouteParams)
+    const isSigninPage = $derived(params.type === 'signin')
+
     let loading = $state(false)
+
+    beforeNavigate(() => {
+        loading = true
+    })
+
+    afterNavigate(() => {
+        loading = false
+    })
 </script>
 
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -15,7 +26,7 @@
             class="mx-auto h-10 w-auto"
         />
         <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
-            {signin ? 'Sign in to your account' : 'Sign up for an account'}
+            {isSigninPage ? 'Sign in to your account' : 'Sign up for an account'}
         </h2>
     </div>
 
@@ -30,7 +41,7 @@
     {:else}
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form
-                action={signin ? '?/signin' : '?/signup'}
+                action={isSigninPage ? '?/signin' : '?/signup'}
                 method="POST"
                 class="space-y-6"
                 use:enhance={() => {
@@ -89,31 +100,24 @@
                         type="submit"
                         class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                     >
-                        {signin ? 'Sign in' : 'Sign up'}
+                        {isSigninPage ? 'Sign in' : 'Sign up'}
                     </button>
                 </div>
             </form>
 
             <p class="mt-10 text-center text-sm/6 text-gray-400">
-                {signin ? 'Not a member?' : 'Already have an account?'}
+                {isSigninPage ? 'Not a member?' : 'Already have an account?'}
                 <a
-                    href={signin ? '/auth' : '/auth?signin'}
+                    href={isSigninPage ? '/auth/signup' : '/auth/signin'}
                     role="button"
                     tabindex="0"
-                    onclick={async (e) => {
-                        e.preventDefault()
-
-                        await goto(signin ? '/auth' : '/auth?signin', {
-                            replaceState: false,
-                            invalidateAll: false,
-                            invalidate: undefined
-                        })
-
-                        signin = !signin
-                    }}
+                    type="button"
+                    aria-label={isSigninPage ? 'Sign up' : 'Sign in'}
+                    data-sveltekit-replacestate
+                    data-sveltekit-preload-data
                     class="font-semibold text-indigo-400 hover:text-indigo-300"
                 >
-                    {signin ? 'Sign up' : 'Sign in'}
+                    {isSigninPage ? 'Sign up' : 'Sign in'}
                 </a>
             </p>
         </div>

@@ -17,8 +17,7 @@ const config = {
         preserveComments: false,
         preserveWhitespace: false,
         modernAst: true,
-        runes: true,
-        css: 'injected'
+        runes: true
     },
     vitePlugin: {
         dynamicCompileOptions({ filename, compileOptions }) {
@@ -29,7 +28,8 @@ const config = {
     },
     kit: {
         output: {
-            bundleStrategy: 'inline' // Reverted to 'inline' to minimize requests
+            bundleStrategy: 'split',
+            preloadStrategy: 'preload-mjs'
         },
         adapter: adapter({
             config: './wrangler.jsonc',
@@ -38,7 +38,11 @@ const config = {
                 exclude: ['<all>']
             }
         }),
-        inlineStyleThreshold: Infinity // Reverted to inline CSS to minimize requests
+        inlineStyleThreshold: Infinity,
+        router: {
+            type: 'pathname',
+            resolution: 'server'
+        }
     }
 }
 

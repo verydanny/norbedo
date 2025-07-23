@@ -38,7 +38,17 @@
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "module": "esnext",
         "noEmit": true,
-        "target": "ESNext"
+        "target": "ESNext",
+
+        /* Bun Configuration */
+        "verbatimModuleSyntax": true,
+        // Some stricter flags (disabled by default)
+        "strictBuiltinIteratorReturn": true,
+        "strictBindCallApply": true,
+        "strictNullChecks": true,
+        "useUnknownInCatchVariables": true,
+        /* Strictest Configuration */
+        "strictFunctionTypes": true
     }
     // Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
     // except $lib which is handled by https://svelte.dev/docs/kit/configuration#files

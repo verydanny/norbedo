@@ -1,5 +1,6 @@
 <script lang="ts">
     import { browser } from '$app/environment'
+    import { afterNavigate } from '$app/navigation'
 
     let touchStartX = 0
     let touchStartY = 0
@@ -125,6 +126,10 @@
         swipeDirection = null
         velocity = 0
     }
+
+    afterNavigate(() => {
+        closeSidebar()
+    })
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -195,7 +200,7 @@
                 class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2"
                 id="sidebar-label"
             >
-                <a href="/" data-sveltekit-preload-data onclick={closeSidebar}>
+                <a href="/" data-sveltekit-preload-code>
                     <div class="flex h-16 shrink-0 items-center justify-between">
                         <img
                             class="h-8 w-auto"
@@ -213,8 +218,7 @@
                                     <a
                                         href="/"
                                         class="group bg-primary text-primary-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                                        onclick={closeSidebar}
-                                        data-sveltekit-preload-data
+                                        data-sveltekit-preload-code
                                     >
                                         <svg
                                             class="text-primary-content size-6 shrink-0"
@@ -394,9 +398,9 @@
                                 </li> -->
                                 <li>
                                     <a
-                                        href="/auth"
+                                        href="/auth/signin"
                                         class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                                        onclick={closeSidebar}
+                                        data-sveltekit-preload-data
                                     >
                                         <span
                                             class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"
@@ -436,7 +440,7 @@
     <div
         class="border-base-300 bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto border-r px-6"
     >
-        <a href="/" data-sveltekit-preload-data>
+        <a href="/" data-sveltekit-preload-code>
             <div class="flex h-16 shrink-0 items-center">
                 <img
                     class="h-8 w-auto"
@@ -455,7 +459,7 @@
                             <a
                                 href="/"
                                 class="group bg-primary text-primary-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                                data-sveltekit-preload-data
+                                data-sveltekit-preload-code
                             >
                                 <svg
                                     class="text-primary-content size-6 shrink-0"
@@ -628,7 +632,7 @@
                         </li> -->
                         <li>
                             <a
-                                href="/auth"
+                                href="/auth/signin"
                                 data-sveltekit-preload-data
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                             >
@@ -645,7 +649,7 @@
                 <li class="-mx-6 mt-auto">
                     <a
                         href="/account"
-                        data-sveltekit-preload-data
+                        data-sveltekit-preload-code
                         class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
                     >
                         <img
@@ -689,7 +693,7 @@
         </svg>
     </button>
     <div class="text-base-content flex-1 text-sm/6 font-semibold"></div>
-    <a href="/account" data-sveltekit-preload-data>
+    <a href="/account" data-sveltekit-preload-code>
         <span class="sr-only">Profile</span>
         <img
             class="bg-base-200 size-8 rounded-full"

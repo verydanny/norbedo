@@ -35,8 +35,8 @@ export function createAdminAppwriteClient() {
     }
 }
 
-export const getSession = (event: RequestEvent) => {
-    return event.cookies.get(SESSION_COOKIE || COOKIE_NAME_LEGACY)
+export const getSession = ({ cookies }: RequestEvent) => {
+    return cookies.get(SESSION_COOKIE || COOKIE_NAME_LEGACY)
 }
 
 export function createUserAppwriteClient(event: RequestEvent) {

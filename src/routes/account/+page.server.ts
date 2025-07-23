@@ -1,26 +1,22 @@
 import {
     COOKIE_NAME_LEGACY,
     SESSION_COOKIE,
-    createUserAppwriteClient
+    createUserAppwriteClient,
+    getSession
 } from '$lib/server/appwrite.js'
 import { redirect } from '@sveltejs/kit'
 
 export async function load(event) {
-    try {
-        const { account } = createUserAppwriteClient(event)
-        const user = await account.get()
+    const session = getSession(event)
 
-        if (!user) {
-            redirect(302, '/auth')
-        }
+    if (!session) {
+        redirect(302, '/auth/signin?redirectTo=/account')
+    }
 
-        // Pass the stored user local to the page.
-        return {
-            user
-        }
-    } catch (error) {
-        console.error(error)
-        redirect(302, '/auth')
+    const { account } = createUserAppwriteClient(event)
+
+    return {
+        user: account.get().catch(() => {})
     }
 }
 
@@ -36,6 +32,6 @@ export const actions = {
         event.cookies.delete(COOKIE_NAME_LEGACY, { path: '/' })
 
         // Redirect to the sign up page.
-        redirect(302, '/auth')
+        redirect(302, '/auth/signup')
     }
 }
