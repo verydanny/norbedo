@@ -1,0 +1,92 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+    "assist": {
+        "actions": {
+            "source": {
+                "organizeImports": "on",
+                "useSortedAttributes": "on",
+                "useSortedKeys": "on",
+                "useSortedProperties": "on"
+            }
+        },
+        "enabled": true
+    },
+    "files": {
+        "ignoreUnknown": false,
+        "includes": [
+            "src/**/*.ts",
+            "src/**/*.js",
+            "!src/**/*.svelte",
+            "svelte.config.js",
+            "vite.config.ts",
+            "vitest-setup-client.ts"
+        ]
+    },
+    "formatter": {
+        "attributePosition": "auto",
+        "bracketSameLine": false,
+        "bracketSpacing": true,
+        "enabled": true,
+        "expand": "auto",
+        "formatWithErrors": false,
+        "includes": [
+            "**",
+            "!**/package-lock.json",
+            "!**/pnpm-lock.yaml",
+            "!**/yarn.lock",
+            "!**/bun.lock",
+            "!**/bun.lockb",
+            "!./static/",
+            "**",
+            "!**/package-lock.json",
+            "!**/pnpm-lock.yaml",
+            "!**/yarn.lock",
+            "!**/bun.lock",
+            "!**/bun.lockb",
+            "!./static/"
+        ],
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "lineWidth": 100,
+        "useEditorconfig": true
+    },
+    "html": { "formatter": { "selfCloseVoidElements": "always" } },
+    "javascript": {
+        "formatter": {
+            "arrowParentheses": "always",
+            "attributePosition": "auto",
+            "bracketSameLine": false,
+            "bracketSpacing": true,
+            "jsxQuoteStyle": "double",
+            "quoteProperties": "asNeeded",
+            "quoteStyle": "single",
+            "semicolons": "asNeeded",
+            "trailingCommas": "none"
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true
+        }
+    },
+    "overrides": [
+        {
+            "includes": ["**/*.svelte"],
+            "linter": {
+                "rules": {
+                    "correctness": {
+                        "noUnusedImports": "off",
+                        "noUnusedVariables": "off"
+                    },
+                    "style": {
+                        "useConst": "off",
+                        "useImportType": "off"
+                    }
+                }
+            }
+        }
+    ],
+    "vcs": { "clientKind": "git", "enabled": false, "useIgnoreFile": false }
+}

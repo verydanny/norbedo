@@ -1,8 +1,11 @@
+import { type ActionFailure, fail, redirect } from '@sveltejs/kit'
+import { safeParse } from 'valibot'
+import { emailPasswordSchema } from '$lib/api/authentication.ts'
 import { makeClient } from '$lib/api/make-client.ts'
 import { getSession } from '$lib/server/appwrite.ts'
-import { fail, redirect } from '@sveltejs/kit'
+import type { PageServerLoadEvent, RequestEvent } from './$types.d.ts'
 
-export const load = (event) => {
+export const load = (event: PageServerLoadEvent): void => {
     const session = getSession(event)
 
     if (session) {
@@ -11,54 +14,40 @@ export const load = (event) => {
 }
 
 export const actions = {
-    signup: async ({ request, fetch }) => {
+    signin: async ({
+        request,
+        fetch
+    }: RequestEvent): Promise<
+        | ActionFailure<{
+              error: true
+              errors: {
+                  field: PropertyKey | undefined
+                  message: string
+              }[]
+          }>
+        | undefined
+    > => {
         const client = makeClient(fetch)
+        const result = safeParse(emailPasswordSchema, Object.fromEntries(await request.formData()))
 
-        // Extract the form data.
-        const form = await request.formData()
-        const email = form.get('email')
-        const password = form.get('password')
+        if (!result.success) {
+            const errors = result.issues.map((error) => {
+                return {
+                    field: error?.path?.[0].key as PropertyKey,
+                    message: error.message
+                }
+            })
 
-        if (!email || !password) {
-            return fail(400, { email, password, missing: true })
-        }
-
-        if (typeof email !== 'string' || typeof password !== 'string') {
-            return fail(400, { email, password, missing: true })
-        }
-
-        const sessionResponse = await client.auth.signup.$post({
-            json: {
-                email,
-                password
-            }
-        })
-
-        if (sessionResponse.ok) {
-            return redirect(302, '/account')
-        }
-
-        return fail(400, { email, password, error: 'Invalid email or password' })
-    },
-    signin: async ({ request, fetch }) => {
-        const client = makeClient(fetch)
-
-        const form = await request.formData()
-        const email = form.get('email')
-        const password = form.get('password')
-
-        if (!email || !password) {
-            return fail(400, { email, password, missing: true })
-        }
-
-        if (typeof email !== 'string' || typeof password !== 'string') {
-            return fail(400, { email, password, missing: true })
+            return fail(400, {
+                error: true,
+                errors
+            })
         }
 
         const sessionResponse = await client.auth.signin.$post({
             json: {
-                email,
-                password
+                email: result.output.email,
+                password: result.output.password
             }
         })
 
@@ -66,6 +55,61 @@ export const actions = {
             return redirect(302, '/account')
         }
 
-        return fail(400, { email, password, error: 'Invalid email or password' })
+        return fail(400, {
+            error: true,
+            errors: [
+                { field: 'email', message: 'Invalid email' },
+                { field: 'password', message: 'Invalid password' }
+            ]
+        })
+    },
+    signup: async ({
+        request,
+        fetch
+    }: RequestEvent): Promise<
+        | ActionFailure<{
+              error: true
+              errors: {
+                  field: PropertyKey | undefined
+                  message: string
+              }[]
+          }>
+        | undefined
+    > => {
+        const client = makeClient(fetch)
+        const result = safeParse(emailPasswordSchema, Object.fromEntries(await request.formData()))
+
+        if (!result.success) {
+            const errors = result.issues.map((error) => {
+                return {
+                    field: error?.path?.[0].key as PropertyKey,
+                    message: error.message
+                }
+            })
+
+            return fail(400, {
+                error: true,
+                errors
+            })
+        }
+
+        const sessionResponse = await client.auth.signup.$post({
+            json: {
+                email: result.output.email,
+                password: result.output.password
+            }
+        })
+
+        if (sessionResponse.ok) {
+            return redirect(302, '/account')
+        }
+
+        return fail(400, {
+            error: true,
+            errors: [
+                { field: 'email', message: 'Invalid email' },
+                { field: 'password', message: 'Invalid password' }
+            ]
+        })
     }
 }

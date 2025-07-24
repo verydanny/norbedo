@@ -1,20 +1,13 @@
 <script lang="ts">
     import { enhance } from '$app/forms'
-    import { afterNavigate, beforeNavigate } from '$app/navigation'
     import { page } from '$app/state'
-    import type { RouteParams } from './$types'
 
-    const params = $derived(page.params as RouteParams)
-    const isSigninPage = $derived(params.type === 'signin')
+    const isSigninPage = $derived(page.params.type === 'signin')
 
     let loading = $state(false)
 
-    beforeNavigate(() => {
-        loading = true
-    })
-
-    afterNavigate(() => {
-        loading = false
+    $effect(() => {
+        console.log(page.form)
     })
 </script>
 

@@ -1,19 +1,20 @@
-import type { Router } from '$lib/api/main.ts'
 import { hc } from 'hono/client'
+import { browser } from '$app/environment'
+import type { Router } from '$lib/api/main.ts'
 
-let browserClient: ReturnType<typeof hc<Router>>
+type HonoClient = ReturnType<typeof hc<Router>>
+let browserClient: HonoClient
 
-export const makeClient = (fetch: Window['fetch']) => {
-    const isBrowser = typeof window !== 'undefined'
-    const origin = isBrowser ? window.location.origin : ''
+export const makeClient = (fetch: Window['fetch']): HonoClient => {
+    const origin = browser ? window.location.origin : ''
 
-    if (isBrowser && browserClient) {
+    if (browser && browserClient) {
         return browserClient
     }
 
-    const client = hc<Router>(origin + '/api', { fetch })
+    const client = hc<Router>(`${origin}/api`, { fetch })
 
-    if (isBrowser) {
+    if (browser) {
         browserClient = client
     }
 

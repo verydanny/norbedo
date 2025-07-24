@@ -1,23 +1,21 @@
-import { Client, Account, Users, type Models } from 'node-appwrite'
-import { PUBLIC_APPWRITE_API_ENDPOINT, PUBLIC_APPWRITE_PROJECT_ID } from '$env/static/public'
-import { APPWRITE_API_KEY, SESSION_COOKIE_PREFIX } from '$env/static/private'
 import type { Cookies, RequestEvent } from '@sveltejs/kit'
-import { COOKIE_NAME } from '$lib/api/authentication'
+import { Account, Client, type Models, Users } from 'node-appwrite'
+import { APPWRITE_API_KEY, SESSION_COOKIE_PREFIX } from '$env/static/private'
+import { PUBLIC_APPWRITE_API_ENDPOINT, PUBLIC_APPWRITE_PROJECT_ID } from '$env/static/public'
 
-export const SESSION_COOKIE = SESSION_COOKIE_PREFIX + PUBLIC_APPWRITE_PROJECT_ID
-export const COOKIE_NAME_LEGACY = SESSION_COOKIE + '_legacy'
+export const COOKIE_NAME = `${SESSION_COOKIE_PREFIX}${PUBLIC_APPWRITE_PROJECT_ID}`
+export const COOKIE_NAME_LEGACY = `${COOKIE_NAME}_legacy`
 
-export const setSessionCookies = (cookies: Cookies, session: Models.Session) => {
-    ;[COOKIE_NAME, COOKIE_NAME_LEGACY].forEach((cookieName) =>
+export const setSessionCookies = (cookies: Cookies, session: Models.Session) =>
+    [COOKIE_NAME, COOKIE_NAME_LEGACY].forEach((cookieName) =>
         cookies.set(cookieName, session.secret, {
-            httpOnly: true,
-            sameSite: 'strict',
             expires: new Date(session.expire),
-            secure: true,
-            path: '/'
+            httpOnly: true,
+            path: '/',
+            sameSite: 'strict',
+            secure: true
         })
     )
-}
 
 export function createAdminAppwriteClient() {
     const client = new Client()
@@ -36,7 +34,7 @@ export function createAdminAppwriteClient() {
 }
 
 export const getSession = ({ cookies }: RequestEvent) => {
-    return cookies.get(SESSION_COOKIE || COOKIE_NAME_LEGACY)
+    return cookies.get(COOKIE_NAME) || cookies.get(COOKIE_NAME_LEGACY)
 }
 
 export function createUserAppwriteClient(event: RequestEvent) {

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte'
+import type { Snippet } from 'svelte'
 
-    let { children, title, footer }: { children: Snippet; title: string; footer: string } = $props()
+let { children, title, footer }: { children: Snippet; title: string; footer: string } = $props()
 </script>
 
 <div class="bg-secondary divide-neutral mb-10 divide-y overflow-hidden rounded-lg shadow-md">

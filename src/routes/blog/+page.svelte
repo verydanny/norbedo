@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ContentCard from '$lib/components/ContentCard.svelte'
+import ContentCard from '$lib/components/ContentCard.svelte'
 </script>
 
 <ContentCard title="Blog" footer="Blog">

@@ -17,6 +17,7 @@ export default ts.config(
     prettier,
     ...svelte.configs.prettier,
     {
+        ignores: ['src/**/*.ts'],
         languageOptions: {
             globals: { ...globals.browser, ...globals.node }
         },
