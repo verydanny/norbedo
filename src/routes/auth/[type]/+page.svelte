@@ -1,21 +1,11 @@
 <script lang="ts">
     import { enhance } from '$app/forms'
     import { page } from '$app/state'
-    // import type { ActionResult } from '@sveltejs/kit'
-    // import type { ActionsFailure, ActionsSuccess, ActionsExport } from './$types.d.ts'
-    // type Result = ActionResult<ActionsSuccess<ActionsExport>, ActionsFailure<ActionsExport>>
-    // interface EnhanceForm {
-    //     update: (options?: { reset?: boolean; invalidateAll?: boolean }) => Promise<void>
-    //     result: Result
-    // }
 
     const isSigninPage = $derived(page.params.type === 'signin')
+
     let { form } = $props()
     let loading = $state(false)
-
-    $effect(() => {
-        console.log('Form', form)
-    })
 </script>
 
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -44,10 +34,22 @@
                 action={isSigninPage ? '?/signin' : '?/signup'}
                 method="POST"
                 class="space-y-6"
-                use:enhance
+                use:enhance={() => {
+                    loading = true
+                    return async ({ update }) => {
+                        await update()
+                        loading = false
+                    }
+                }}
             >
                 <div>
-                    <label for="email" class="block text-sm/6 font-medium text-white">
+                    <label
+                        for="email"
+                        class={[
+                            'block text-sm/6 font-medium',
+                            form?.errors?.email ? 'text-red-400' : 'text-white'
+                        ]}
+                    >
                         Email address
                     </label>
                     <div class="mt-2">
@@ -57,14 +59,31 @@
                             name="email"
                             required
                             autocomplete="email"
-                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                            aria-errormessage={form?.errors?.email?.message}
+                            aria-invalid={form?.errors?.email ? 'true' : 'false'}
+                            class={[
+                                'block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6',
+                                form?.errors?.email &&
+                                    'border-2 border-red-400 outline-red-400 focus:outline-red-400'
+                            ]}
                         />
+                        {#if form?.errors?.email}
+                            <p class="mt-2 text-sm text-red-400">
+                                {form.errors.email.message}
+                            </p>
+                        {/if}
                     </div>
                 </div>
 
                 <div>
                     <div class="flex items-center justify-between">
-                        <label for="password" class="block text-sm/6 font-medium text-white">
+                        <label
+                            for="password"
+                            class={[
+                                'block text-sm/6 font-medium',
+                                form?.errors?.password ? 'text-red-400' : 'text-white'
+                            ]}
+                        >
                             Password
                         </label>
                         <div class="text-sm">
@@ -83,8 +102,19 @@
                             name="password"
                             required
                             autocomplete="current-password"
-                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                            aria-errormessage={form?.errors?.password?.message}
+                            aria-invalid={form?.errors?.password ? 'true' : 'false'}
+                            class={[
+                                'block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6',
+                                form?.errors?.password &&
+                                    'border-2 border-red-400 outline-red-400 focus:outline-red-400'
+                            ]}
                         />
+                        {#if form?.errors?.password}
+                            <p class="mt-2 text-sm text-red-400">
+                                {form.errors.password.message}
+                            </p>
+                        {/if}
                     </div>
                 </div>
 
