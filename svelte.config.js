@@ -31,10 +31,9 @@ const config = {
                 include: ['/*']
             }
         }),
-        inlineStyleThreshold: Infinity,
         output: {
-            // bundleStrategy: 'split',
-            preloadStrategy: 'preload-mjs'
+            bundleStrategy: 'single'
+            // preloadStrategy: 'preload-mjs'
         }
         // router: {
         //     type: 'pathname',

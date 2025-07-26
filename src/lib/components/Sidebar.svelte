@@ -1,142 +1,135 @@
 <script lang="ts">
-import { browser } from '$app/environment'
-import { onNavigate } from '$app/navigation'
+    import { browser } from '$app/environment'
 
-let touchStartX = 0
-let touchStartY = 0
-let swipeDirection: 'horizontal' | 'vertical' | null = null
-let lastMoveX = 0
-let lastMoveTime = 0
-let velocity = 0
+    let touchStartX = 0
+    let touchStartY = 0
+    let swipeDirection: 'horizontal' | 'vertical' | null = null
+    let lastMoveX = 0
+    let lastMoveTime = 0
+    let velocity = 0
 
-let isOpen = $state(false)
-let isDragging = $state(false)
-let currentTranslateX = $state(0)
+    let isOpen = $state(false)
+    let isDragging = $state(false)
+    let currentTranslateX = $state(0)
 
-let sidebarWidth = $state(320)
-let sidebarPanel: HTMLDivElement | undefined
+    let sidebarWidth = $state(320)
+    let sidebarPanel: HTMLDivElement | undefined
 
-const openSidebar = () => {
-    isOpen = true
-}
-
-const closeSidebar = () => {
-    isOpen = false
-}
-
-const handleKeydown = (event: KeyboardEvent) => event.key === 'Escape' && isOpen && closeSidebar()
-
-const handleBackgroundInteraction = (event: Event) => {
-    // Close sidebar if the click is on the background itself, not on the panel.
-    if (event.currentTarget === event.target) {
-        closeSidebar()
-    }
-}
-
-$effect(() => {
-    if (!browser) {
-        return
+    const openSidebar = () => {
+        isOpen = true
     }
 
-    if (sidebarPanel) {
-        sidebarWidth = sidebarPanel.clientWidth
+    const closeSidebar = () => {
+        isOpen = false
     }
 
-    if (isOpen) {
-        document.body.classList.add('overflow-hidden')
-    } else {
-        document.body.classList.remove('overflow-hidden')
-    }
+    const handleKeydown = (event: KeyboardEvent) =>
+        event.key === 'Escape' && isOpen && closeSidebar()
 
-    // Cleanup when the component is destroyed
-    return () => {
-        if (browser) {
-            document.body.classList.remove('overflow-hidden')
-        }
-    }
-})
-
-const handleTouchStart = (e: TouchEvent) => {
-    if (!isOpen) {
-        return
-    }
-
-    touchStartX = e?.touches[0]?.clientX ?? 0
-    touchStartY = e?.touches[0]?.clientY ?? 0
-    isDragging = true
-    swipeDirection = null
-
-    // Reset velocity tracking
-    lastMoveX = touchStartX
-    lastMoveTime = performance.now()
-    velocity = 0
-}
-
-const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging) {
-        return
-    }
-
-    const deltaX = (e?.touches[0]?.clientX ?? 0) - touchStartX
-    const deltaY = (e?.touches[0]?.clientY ?? 0) - touchStartY
-
-    if (swipeDirection === null) {
-        swipeDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical'
-    }
-
-    if (swipeDirection === 'horizontal') {
-        const currentX = e?.touches[0]?.clientX ?? 0
-        const now = performance.now()
-        const timeDelta = now - lastMoveTime
-
-        if (timeDelta > 0) {
-            const moveDelta = currentX - lastMoveX
-            velocity = moveDelta / timeDelta
-        }
-
-        lastMoveX = currentX
-        lastMoveTime = now
-
-        // Emulate iOS rubber band effect
-        if (deltaX > 0) {
-            // Dragging right from open position (overscroll)
-            currentTranslateX = deltaX ** 0.7
-        } else {
-            // Dragging left
-            currentTranslateX = deltaX
-        }
-    }
-}
-
-const handleTouchEnd = () => {
-    if (!isDragging) {
-        return
-    }
-
-    isDragging = false
-
-    if (swipeDirection === 'horizontal') {
-        const flickVelocity = -0.3 // px/ms
-        // If swiped more than a 33% of the way, or flicked, close the sidebar
-        if (velocity < flickVelocity || currentTranslateX < -sidebarWidth / 3) {
+    const handleBackgroundInteraction = (event: Event) => {
+        // Close sidebar if the click is on the background itself, not on the panel.
+        if (event.currentTarget === event.target) {
             closeSidebar()
         }
-
-        // Reset translation. The element will animate to its final state (open or closed)
-        // because the transition class is re-applied.
-        currentTranslateX = 0
     }
 
-    swipeDirection = null
-    velocity = 0
-}
+    $effect(() => {
+        if (!browser) {
+            return
+        }
 
-onNavigate((navigation) => {
-    console.log(navigation.from?.route.id, navigation.to?.route.id)
-    if (navigation.type === 'link' && navigation.from?.route.id !== navigation.to?.route.id) {
-        closeSidebar()
+        if (sidebarPanel) {
+            sidebarWidth = sidebarPanel.clientWidth
+        }
+
+        if (isOpen) {
+            document.body.classList.add('overflow-hidden')
+        } else {
+            document.body.classList.remove('overflow-hidden')
+        }
+
+        // Cleanup when the component is destroyed
+        return () => {
+            if (browser) {
+                document.body.classList.remove('overflow-hidden')
+            }
+        }
+    })
+
+    const handleTouchStart = (e: TouchEvent) => {
+        if (!isOpen) {
+            return
+        }
+
+        touchStartX = e?.touches[0]?.clientX ?? 0
+        touchStartY = e?.touches[0]?.clientY ?? 0
+        isDragging = true
+        swipeDirection = null
+
+        // Reset velocity tracking
+        lastMoveX = touchStartX
+        lastMoveTime = performance.now()
+        velocity = 0
     }
-})
+
+    const handleTouchMove = (e: TouchEvent) => {
+        if (!isDragging) {
+            return
+        }
+
+        const deltaX = (e?.touches[0]?.clientX ?? 0) - touchStartX
+        const deltaY = (e?.touches[0]?.clientY ?? 0) - touchStartY
+
+        if (swipeDirection === null) {
+            swipeDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical'
+        }
+
+        if (swipeDirection === 'horizontal') {
+            const currentX = e?.touches[0]?.clientX ?? 0
+            const now = performance.now()
+            const timeDelta = now - lastMoveTime
+
+            if (timeDelta > 0) {
+                const moveDelta = currentX - lastMoveX
+                velocity = moveDelta / timeDelta
+            }
+
+            lastMoveX = currentX
+            lastMoveTime = now
+
+            // Emulate iOS rubber band effect
+            if (deltaX > 0) {
+                // Dragging right from open position (overscroll)
+                currentTranslateX = deltaX ** 0.7
+            } else {
+                // Dragging left
+                currentTranslateX = deltaX
+            }
+        }
+    }
+
+    const handleTouchEnd = () => {
+        if (!isDragging) {
+            return
+        }
+
+        isDragging = false
+
+        if (swipeDirection === 'horizontal') {
+            const flickVelocity = -0.3 // px/ms
+            // If swiped more than a 33% of the way, or flicked, close the sidebar
+            if (velocity < flickVelocity || currentTranslateX < -sidebarWidth / 3) {
+                closeSidebar()
+            }
+
+            // Reset translation. The element will animate to its final state (open or closed)
+            // because the transition class is re-applied.
+            currentTranslateX = 0
+        }
+
+        swipeDirection = null
+        velocity = 0
+    }
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -207,7 +200,7 @@ onNavigate((navigation) => {
                 class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2"
                 id="sidebar-label"
             >
-                <a href="/" data-sveltekit-preload-code>
+                <a href="/" data-sveltekit-preload-code onclick={closeSidebar}>
                     <div class="flex h-16 shrink-0 items-center justify-between">
                         <img
                             class="h-8 w-auto"
@@ -229,6 +222,7 @@ onNavigate((navigation) => {
                                     <a
                                         href="/"
                                         class="group bg-primary text-primary-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                                        onclick={closeSidebar}
                                     >
                                         <svg
                                             class="text-primary-content size-6 shrink-0"
@@ -410,6 +404,7 @@ onNavigate((navigation) => {
                                     <a
                                         href="/auth/signin"
                                         class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                                        onclick={closeSidebar}
                                     >
                                         <span
                                             class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"

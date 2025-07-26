@@ -34,7 +34,6 @@
 
         /// WSDAFDSAF
         "isolatedModules": true,
-        "jsx": "preserve",
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
         "module": "esnext",
         "noEmit": true,

@@ -5,10 +5,6 @@
     const isSigninPage = $derived(page.params.type === 'signin')
 
     let loading = $state(false)
-
-    $effect(() => {
-        console.log(page.form)
-    })
 </script>
 
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -39,7 +35,6 @@
                 class="space-y-6"
                 use:enhance={() => {
                     loading = true
-
                     return async ({ update }) => {
                         await update()
                         loading = false

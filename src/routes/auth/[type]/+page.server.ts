@@ -1,7 +1,7 @@
 import { type ActionFailure, fail, redirect } from '@sveltejs/kit'
 import { safeParse } from 'valibot'
-import { emailPasswordSchema } from '$lib/api/authentication.ts'
 import { makeClient } from '$lib/api/make-client.ts'
+import { EmailPasswordSchema } from '$lib/schemas/authentication.ts'
 import { getSession } from '$lib/server/appwrite.ts'
 import type { PageServerLoadEvent, RequestEvent } from './$types.d.ts'
 
@@ -28,7 +28,7 @@ export const actions = {
         | undefined
     > => {
         const client = makeClient(fetch)
-        const result = safeParse(emailPasswordSchema, Object.fromEntries(await request.formData()))
+        const result = safeParse(EmailPasswordSchema, Object.fromEntries(await request.formData()))
 
         if (!result.success) {
             const errors = result.issues.map((error) => {
@@ -77,7 +77,7 @@ export const actions = {
         | undefined
     > => {
         const client = makeClient(fetch)
-        const result = safeParse(emailPasswordSchema, Object.fromEntries(await request.formData()))
+        const result = safeParse(EmailPasswordSchema, Object.fromEntries(await request.formData()))
 
         if (!result.success) {
             const errors = result.issues.map((error) => {

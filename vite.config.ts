@@ -4,8 +4,38 @@ import devtoolsJson from 'vite-plugin-devtools-json'
 import { defineConfig } from 'vitest/config'
 // import { FontaineTransform } from 'fontaine'
 
-export default defineConfig(() => {
+export default defineConfig(({ mode }) => {
+    const production = mode === 'production'
+
     return {
+        build: {
+            assetsInlineLimit: 0,
+            chunkSizeWarningLimit: 4096,
+            cssMinify: 'lightningcss',
+            minify: production ? 'esbuild' : false,
+            modulePreload: {
+                polyfill: false
+            },
+            target: 'esnext'
+        },
+        css: {
+            lightningcss: {
+                targets: {
+                    chrome: 135,
+                    safari: 18
+                }
+            }
+        },
+        esbuild: production
+            ? {
+                  drop: ['console', 'debugger'],
+                  legalComments: 'none',
+                  minifyIdentifiers: true,
+                  minifySyntax: true,
+                  minifyWhitespace: true,
+                  treeShaking: true
+              }
+            : {},
         plugins: [
             sveltekit(),
             tailwindcss(),
@@ -16,42 +46,14 @@ export default defineConfig(() => {
             //         return new URL(`./static${id}`, import.meta.url)
             //     }
             // })
-        ]
-        // esbuild: production
-        //     ? {
-        //           minifyIdentifiers: true,
-        //           minifySyntax: true,
-        //           minifyWhitespace: true,
-        //           drop: ['console', 'debugger'],
-        //           treeShaking: true,
-        //           legalComments: 'none'
-        //       }
-        //     : {},
-        // css: {
-        //     lightningcss: {
-        //         targets: {
-        //             chrome: 135,
-        //             safari: 18
-        //         }
-        //     }
-        // },
-        // build: {
-        //     modulePreload: {
-        //         polyfill: false
-        //     },
-        //     target: 'esnext',
-        //     minify: production ? 'esbuild' : false,
-        //     cssMinify: 'lightningcss',
-        //     chunkSizeWarningLimit: 4096,
-        //     assetsInlineLimit: 0
-        // }
-        // rollupOptions: production
-        //     ? {
-        //           output: {
-        //               inlineDynamicImports: true
-        //           }
-        //       }
-        //     : {},
+        ],
+        rollupOptions: production
+            ? {
+                  output: {
+                      inlineDynamicImports: true
+                  }
+              }
+            : {}
         // test: {
         //     projects: [
         //         {

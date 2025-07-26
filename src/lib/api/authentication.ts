@@ -2,26 +2,8 @@ import { vValidator } from '@hono/valibot-validator'
 import { setCookie } from 'hono/cookie'
 import { Hono } from 'hono/tiny'
 import { ID } from 'node-appwrite'
-import { email, minLength, nonEmpty, object, pipe, string, trim } from 'valibot'
+import { EmailPasswordSchema } from '$lib/schemas/authentication'
 import { COOKIE_NAME, COOKIE_NAME_LEGACY, createAdminAppwriteClient } from '$lib/server/appwrite'
-
-const EmailSchema = pipe(
-    string(),
-    nonEmpty('Please enter your email.'),
-    trim(),
-    email('The email is badly formatted.')
-)
-
-const PasswordSchema = pipe(
-    string('Please enter your password.'),
-    minLength(8, 'Password must be at least 8 characters long'),
-    trim()
-)
-
-export const emailPasswordSchema = object({
-    email: EmailSchema,
-    password: PasswordSchema
-})
 
 export const authentication = new Hono()
     .get('/me', async (c) => {
@@ -29,7 +11,7 @@ export const authentication = new Hono()
             message: 'Hello World'
         })
     })
-    .post('/signup', vValidator('json', emailPasswordSchema), async (c) => {
+    .post('/signup', vValidator('json', EmailPasswordSchema), async (c) => {
         const { account } = createAdminAppwriteClient()
         const body = c.req.valid('json')
 
@@ -67,7 +49,7 @@ export const authentication = new Hono()
             )
         }
     })
-    .post('/signin', vValidator('json', emailPasswordSchema), async (c) => {
+    .post('/signin', vValidator('json', EmailPasswordSchema), async (c) => {
         const { account } = createAdminAppwriteClient()
         const body = c.req.valid('json')
 
