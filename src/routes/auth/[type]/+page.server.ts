@@ -5,6 +5,8 @@ import { EmailPasswordSchema } from '$lib/schemas/authentication.ts'
 import { getSession } from '$lib/server/appwrite.ts'
 import type { PageServerLoadEvent, RequestEvent } from './$types.d.ts'
 
+type ErrorResponse = Record<'email' | 'password', { message: string }>
+
 export const load = (event: PageServerLoadEvent): void => {
     const session = getSession(event)
 
@@ -20,10 +22,7 @@ export const actions = {
     }: RequestEvent): Promise<
         | ActionFailure<{
               error: true
-              errors: {
-                  field: PropertyKey | undefined
-                  message: string
-              }[]
+              errors: ErrorResponse
           }>
         | undefined
     > => {
@@ -31,17 +30,18 @@ export const actions = {
         const result = safeParse(EmailPasswordSchema, Object.fromEntries(await request.formData()))
 
         if (!result.success) {
-            const errors = result.issues.map((error) => {
-                return {
-                    field: error?.path?.[0].key as PropertyKey,
-                    message: error.message
-                }
-            })
+            const errors = result.issues.reduce((acc, error) => {
+                const key = error?.path?.[0].key as string
+                const message = error?.message
 
-            return fail(400, {
-                error: true,
-                errors
-            })
+                if (key && !acc[key as keyof ErrorResponse]) {
+                    acc[key as keyof ErrorResponse] = { message }
+                }
+
+                return acc
+            }, {} as ErrorResponse)
+
+            return fail(400, { error: true, errors })
         }
 
         const sessionResponse = await client.auth.signin.$post({
@@ -57,10 +57,10 @@ export const actions = {
 
         return fail(400, {
             error: true,
-            errors: [
-                { field: 'email', message: 'Invalid email' },
-                { field: 'password', message: 'Invalid password' }
-            ]
+            errors: {
+                email: { message: 'Invalid email' },
+                password: { message: 'Invalid password' }
+            }
         })
     },
     signup: async ({
@@ -69,10 +69,7 @@ export const actions = {
     }: RequestEvent): Promise<
         | ActionFailure<{
               error: true
-              errors: {
-                  field: PropertyKey | undefined
-                  message: string
-              }[]
+              errors: ErrorResponse
           }>
         | undefined
     > => {
@@ -80,12 +77,16 @@ export const actions = {
         const result = safeParse(EmailPasswordSchema, Object.fromEntries(await request.formData()))
 
         if (!result.success) {
-            const errors = result.issues.map((error) => {
-                return {
-                    field: error?.path?.[0].key as PropertyKey,
-                    message: error.message
+            const errors = result.issues.reduce((acc, error) => {
+                const key = error?.path?.[0].key as string
+                const message = error?.message
+
+                if (key && !acc[key as keyof ErrorResponse]) {
+                    acc[key as keyof ErrorResponse] = { message }
                 }
-            })
+
+                return acc
+            }, {} as ErrorResponse)
 
             return fail(400, {
                 error: true,
@@ -106,10 +107,10 @@ export const actions = {
 
         return fail(400, {
             error: true,
-            errors: [
-                { field: 'email', message: 'Invalid email' },
-                { field: 'password', message: 'Invalid password' }
-            ]
+            errors: {
+                email: { message: 'Invalid email' },
+                password: { message: 'Invalid password' }
+            }
         })
     }
 }

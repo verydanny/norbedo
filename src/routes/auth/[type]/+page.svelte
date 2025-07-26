@@ -1,10 +1,21 @@
 <script lang="ts">
     import { enhance } from '$app/forms'
     import { page } from '$app/state'
+    // import type { ActionResult } from '@sveltejs/kit'
+    // import type { ActionsFailure, ActionsSuccess, ActionsExport } from './$types.d.ts'
+    // type Result = ActionResult<ActionsSuccess<ActionsExport>, ActionsFailure<ActionsExport>>
+    // interface EnhanceForm {
+    //     update: (options?: { reset?: boolean; invalidateAll?: boolean }) => Promise<void>
+    //     result: Result
+    // }
 
     const isSigninPage = $derived(page.params.type === 'signin')
-
+    let { form } = $props()
     let loading = $state(false)
+
+    $effect(() => {
+        console.log('Form', form)
+    })
 </script>
 
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -33,13 +44,7 @@
                 action={isSigninPage ? '?/signin' : '?/signup'}
                 method="POST"
                 class="space-y-6"
-                use:enhance={() => {
-                    loading = true
-                    return async ({ update }) => {
-                        await update()
-                        loading = false
-                    }
-                }}
+                use:enhance
             >
                 <div>
                     <label for="email" class="block text-sm/6 font-medium text-white">
