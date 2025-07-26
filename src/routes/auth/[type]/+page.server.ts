@@ -69,7 +69,7 @@ export const actions = {
     }: RequestEvent): Promise<
         | ActionFailure<{
               error: true
-              errors?: ErrorResponse
+              errors: Partial<ErrorResponse>
           }>
         | undefined
     > => {
