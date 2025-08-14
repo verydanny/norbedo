@@ -1,10 +1,6 @@
 import adapter from '@sveltejs/adapter-cloudflare'
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
-// function disableRunes(filename) {
-//     return filename.includes('node_modules')
-// }
-
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
     compilerOptions: {
@@ -31,9 +27,10 @@ const config = {
                 include: ['/*']
             }
         }),
+        inlineStyleThreshold: Infinity,
         output: {
-            bundleStrategy: 'single'
-            // preloadStrategy: 'preload-mjs'
+            bundleStrategy: 'split',
+            preloadStrategy: 'preload-mjs'
         }
         // router: {
         //     type: 'pathname',

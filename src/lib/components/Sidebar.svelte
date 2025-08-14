@@ -1,5 +1,7 @@
 <script lang="ts">
     import { browser } from '$app/environment'
+    import { preloadData } from '$app/navigation'
+    import { intersectionObserver } from '$lib/actions/intersecting/use-intersection-observer.svelte.ts'
 
     let touchStartX = 0
     let touchStartY = 0
@@ -15,8 +17,16 @@
     let sidebarWidth = $state(320)
     let sidebarPanel: HTMLDivElement | undefined
 
+    /**
+     * We preload the data for the pages that are shown in the sidebar.
+     * This is to preload not on hover, but when menu is opened. This lets
+     * us split application while keeping data load on server, but it still
+     * feels fast.
+     */
     const openSidebar = () => {
         isOpen = true
+
+        Promise.allSettled([preloadData('/'), preloadData('/auth/signin')])
     }
 
     const closeSidebar = () => {
@@ -200,7 +210,7 @@
                 class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2"
                 id="sidebar-label"
             >
-                <a href="/" data-sveltekit-preload-code onclick={closeSidebar}>
+                <a href="/" onclick={closeSidebar}>
                     <div class="flex h-16 shrink-0 items-center justify-between">
                         <img
                             class="h-8 w-auto"
@@ -211,11 +221,7 @@
                     </div>
                 </a>
                 <nav class="flex flex-1 flex-col">
-                    <ul
-                        role="list"
-                        class="flex flex-1 flex-col gap-y-7"
-                        data-sveltekit-preload-code
-                    >
+                    <ul role="list" class="flex flex-1 flex-col gap-y-7">
                         <li>
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li>
@@ -439,11 +445,16 @@
 </div>
 
 <!-- Static sidebar for desktop -->
-<div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+<div
+    class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col"
+    use:intersectionObserver={{ rootMargin: '0px', threshold: 0.5 }}
+    oninview_enter={() => {
+        Promise.allSettled([preloadData('/'), preloadData('/auth/signin')])
+    }}
+>
     <!-- Sidebar component, swap this element with another sidebar if you like -->
     <div
         class="border-base-300 bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto border-r px-6"
-        data-sveltekit-preload-code
     >
         <a href="/">
             <div class="flex h-16 shrink-0 items-center">
@@ -638,6 +649,7 @@
                             <a
                                 href="/auth/signin"
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
+                                data-sveltekit-preload-data="hover"
                             >
                                 <span
                                     class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"
@@ -695,7 +707,7 @@
         </svg>
     </button>
     <div class="text-base-content flex-1 text-sm/6 font-semibold"></div>
-    <a href="/account" data-sveltekit-preload-code>
+    <a href="/account">
         <span class="sr-only">Profile</span>
         <img
             class="bg-base-200 size-8 rounded-full"

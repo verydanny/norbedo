@@ -7,7 +7,7 @@ export const COOKIE_NAME = `${SESSION_COOKIE_PREFIX}${PUBLIC_APPWRITE_PROJECT_ID
 export const COOKIE_NAME_LEGACY = `${COOKIE_NAME}_legacy`
 
 export const setSessionCookies = (cookies: Cookies, session: Models.Session) =>
-    [COOKIE_NAME, COOKIE_NAME_LEGACY].forEach((cookieName) =>
+    [COOKIE_NAME, COOKIE_NAME_LEGACY].forEach((cookieName) => {
         cookies.set(cookieName, session.secret, {
             expires: new Date(session.expire),
             httpOnly: true,
@@ -15,7 +15,7 @@ export const setSessionCookies = (cookies: Cookies, session: Models.Session) =>
             sameSite: 'strict',
             secure: true
         })
-    )
+    })
 
 export function createAdminAppwriteClient() {
     const client = new Client()
