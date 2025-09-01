@@ -17,16 +17,18 @@
     let sidebarWidth = $state(320)
     let sidebarPanel: HTMLDivElement | undefined
 
+    const openSidebar = () => {
+        isOpen = true
+    }
+
     /**
      * We preload the data for the pages that are shown in the sidebar.
      * This is to preload not on hover, but when menu is opened. This lets
      * us split application while keeping data load on server, but it still
      * feels fast.
      */
-    const openSidebar = () => {
-        isOpen = true
-
-        Promise.allSettled([preloadData('/'), preloadData('/auth/signin')])
+    const preloadSidebar = () => {
+        Promise.allSettled([preloadData('/auth/signin')])
     }
 
     const closeSidebar = () => {
@@ -174,6 +176,8 @@
             ontouchstart={handleTouchStart}
             ontouchmove={handleTouchMove}
             ontouchend={handleTouchEnd}
+            use:intersectionObserver={{ rootMargin: '0px', threshold: 0.5 }}
+            oninview_enter={preloadSidebar}
         >
             <div
                 class="absolute top-0 left-full flex w-16 justify-center pt-5 transition duration-300 ease-in-out {isOpen
@@ -448,9 +452,7 @@
 <div
     class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col"
     use:intersectionObserver={{ rootMargin: '0px', threshold: 0.5 }}
-    oninview_enter={() => {
-        Promise.allSettled([preloadData('/'), preloadData('/auth/signin')])
-    }}
+    oninview_enter={preloadSidebar}
 >
     <!-- Sidebar component, swap this element with another sidebar if you like -->
     <div
@@ -649,7 +651,6 @@
                             <a
                                 href="/auth/signin"
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                                data-sveltekit-preload-data="hover"
                             >
                                 <span
                                     class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"

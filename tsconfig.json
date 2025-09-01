@@ -40,7 +40,6 @@
         "target": "ESNext",
 
         /* Bun Configuration */
-        "useImportExtensions": true,
         "verbatimModuleSyntax": true,
         // Some stricter flags (disabled by default)
         "strictBuiltinIteratorReturn": true,
