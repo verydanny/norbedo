@@ -1,6 +1,6 @@
 import { Hono } from 'hono/tiny'
-import { authentication } from './authentication'
-import { tasks } from './tasks'
+import { authentication } from './authentication.ts'
+import { tasks } from './tasks.ts'
 
 export const router = new Hono()
     .get('/health', () => {

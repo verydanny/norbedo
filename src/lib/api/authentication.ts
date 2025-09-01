@@ -16,8 +16,15 @@ export const authentication = new Hono()
         const body = c.req.valid('json')
 
         try {
-            await account.create(ID.unique(), body.email, body.password)
-            const session = await account.createEmailPasswordSession(body.email, body.password)
+            await account.create({
+                email: body.email,
+                password: body.password,
+                userId: ID.unique()
+            })
+            const session = await account.createEmailPasswordSession({
+                email: body.email,
+                password: body.password
+            })
 
             setCookie(c, COOKIE_NAME, session.secret, {
                 expires: new Date(session.expire),
@@ -54,7 +61,10 @@ export const authentication = new Hono()
         const body = c.req.valid('json')
 
         try {
-            const session = await account.createEmailPasswordSession(body.email, body.password)
+            const session = await account.createEmailPasswordSession({
+                email: body.email,
+                password: body.password
+            })
 
             setCookie(c, COOKIE_NAME, session.secret, {
                 expires: new Date(session.expire),

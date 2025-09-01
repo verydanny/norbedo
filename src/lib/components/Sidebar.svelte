@@ -1,7 +1,7 @@
 <script lang="ts">
     import { browser } from '$app/environment'
     import { preloadData } from '$app/navigation'
-    import { intersectionObserver } from '$lib/actions/intersecting/use-intersection-observer.svelte.ts'
+    import { intersectionObserver } from '$lib/actions/intersecting/use-intersection-observer.svelte'
 
     let touchStartX = 0
     let touchStartY = 0

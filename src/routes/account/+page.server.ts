@@ -5,7 +5,7 @@ import {
     COOKIE_NAME_LEGACY,
     createUserAppwriteClient,
     getSession
-} from '$lib/server/appwrite.js'
+} from '$lib/server/appwrite'
 import type { PageServerLoadEvent, RequestEvent } from './$types'
 
 export async function load(event: PageServerLoadEvent): Promise<{

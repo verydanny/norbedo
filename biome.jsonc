@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+    "$schema": "node_modules/@biomejs/biome/configuration_schema.json",
     "assist": {
         "actions": {
             "source": {
@@ -68,7 +68,32 @@
     "linter": {
         "enabled": true,
         "rules": {
-            "recommended": true
+            "a11y": {
+                "recommended": true
+            },
+            "complexity": {
+                "recommended": true
+            },
+            "correctness": {
+                "recommended": true,
+                "useImportExtensions": "on"
+            },
+            "nursery": {
+                "recommended": true
+            },
+            "performance": {
+                "recommended": true
+            },
+            "recommended": true,
+            "security": {
+                "recommended": true
+            },
+            "style": {
+                "recommended": true
+            },
+            "suspicious": {
+                "recommended": true
+            }
         }
     },
     "overrides": [
@@ -88,5 +113,5 @@
             }
         }
     ],
-    "vcs": { "clientKind": "git", "enabled": false, "useIgnoreFile": false }
+    "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true }
 }

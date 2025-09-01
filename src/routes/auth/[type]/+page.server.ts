@@ -1,8 +1,8 @@
 import { type ActionFailure, fail, redirect } from '@sveltejs/kit'
-import { safeParse } from 'valibot'
-import { makeClient } from '$lib/api/make-client.ts'
-import { EmailPasswordSchema } from '$lib/schemas/authentication.ts'
-import { getSession } from '$lib/server/appwrite.ts'
+import { safeParseAsync } from 'valibot'
+import { makeClient } from '$lib/api/make-client'
+import { EmailPasswordSchema } from '$lib/schemas/authentication'
+import { getSession } from '$lib/server/appwrite'
 import type { PageServerLoadEvent, RequestEvent } from './$types.d.ts'
 
 type ErrorResponse = Record<'email' | 'password', { message: string }>
@@ -27,7 +27,10 @@ export const actions = {
         | undefined
     > => {
         const client = makeClient(fetch)
-        const result = safeParse(EmailPasswordSchema, Object.fromEntries(await request.formData()))
+        const result = await safeParseAsync(
+            EmailPasswordSchema,
+            Object.fromEntries(await request.formData())
+        )
 
         if (!result.success) {
             const errors = result.issues.reduce((acc, error) => {
@@ -74,7 +77,10 @@ export const actions = {
         | undefined
     > => {
         const client = makeClient(fetch)
-        const result = safeParse(EmailPasswordSchema, Object.fromEntries(await request.formData()))
+        const result = await safeParseAsync(
+            EmailPasswordSchema,
+            Object.fromEntries(await request.formData())
+        )
 
         if (!result.success) {
             const errors = result.issues.reduce((acc, error) => {
