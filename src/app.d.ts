@@ -8,7 +8,7 @@ declare global {
     namespace App {
         // interface Error {}
         interface Locals {
-            user: Promise<Models.User<Models.Preferences>>
+            user: Models.User<Models.Preferences>
         }
         // interface PageData {}
         // interface PageState {}

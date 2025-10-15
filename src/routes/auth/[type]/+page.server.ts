@@ -2,15 +2,12 @@ import { type ActionFailure, fail, redirect } from '@sveltejs/kit'
 import { safeParseAsync } from 'valibot'
 import { makeClient } from '$lib/api/make-client'
 import { EmailPasswordSchema } from '$lib/schemas/authentication'
-import { getSession } from '$lib/server/appwrite'
 import type { PageServerLoadEvent, RequestEvent } from './$types.d.ts'
 
 type ErrorResponse = Record<'email' | 'password', { message: string }>
 
-export const load = (event: PageServerLoadEvent): void => {
-    const session = getSession(event)
-
-    if (session) {
+export const load = async (event: PageServerLoadEvent): Promise<void> => {
+    if (event.locals.user) {
         redirect(302, '/account')
     }
 }

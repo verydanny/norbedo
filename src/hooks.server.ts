@@ -1,14 +1,12 @@
-// import { createUserAppwriteClient } from '$lib/server/appwrite'
-// import type { Handle } from '@sveltejs/kit'
+import type { Handle } from '@sveltejs/kit'
+import { createUserAppwriteClient } from '$lib/server/appwrite'
 
-// export const handle: Handle = async ({ event, resolve }) => {
-//     try {
-//         const { account } = createUserAppwriteClient(event)
+export const handle: Handle = async ({ event, resolve }) => {
+    try {
+        const { account } = createUserAppwriteClient(event)
 
-//         event.locals.user = account.get()
-//     } catch {
-//         console.error('Failed to create user appwrite client')
-//     }
+        event.locals.user = await account.get()
+    } catch {}
 
-//     return resolve(event)
-// }
+    return resolve(event)
+}

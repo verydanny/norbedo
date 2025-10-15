@@ -1,6 +1,7 @@
 {
     "tailwindCSS.experimental.configFile": "src/app.css",
     "editor.formatOnSave": true,
+    "eslint.enable": false,
     "[typescript]": {
         "editor.defaultFormatter": "biomejs.biome"
     },
