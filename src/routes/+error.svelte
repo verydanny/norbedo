@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte'
 import { page } from '$app/state'
+import { resolve } from '$app/paths'
 import Code from '$lib/components/Code.svelte'
 
 const errorMessage = $derived(page.error?.message || 'Page not found')
@@ -88,7 +89,7 @@ onMount(() => {
         <!-- Action Button -->
         <div class="pt-6">
             <a
-                href="/"
+                href={resolve('/')}
                 class="btn btn-primary btn-lg transform shadow-xl transition-all duration-200 hover:scale-105 hover:shadow-2xl"
             >
                 Go Back Home

@@ -2,6 +2,7 @@
 import { browser } from '$app/environment'
 import { preloadData } from '$app/navigation'
 import { intersectionObserver } from '$lib/actions/intersecting/use-intersection-observer.svelte'
+import { resolve } from '$app/paths'
 
 let touchStartX = 0
 let touchStartY = 0
@@ -213,7 +214,7 @@ const handleTouchEnd = () => {
                 class="bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto px-6 pb-2"
                 id="sidebar-label"
             >
-                <a href="/" onclick={closeSidebar}>
+                <a href={resolve('/')} onclick={closeSidebar}>
                     <div class="flex h-16 shrink-0 items-center justify-between">
                         <img
                             class="h-8 w-auto"
@@ -229,7 +230,7 @@ const handleTouchEnd = () => {
                             <ul role="list" class="-mx-2 space-y-1">
                                 <li>
                                     <a
-                                        href="/"
+                                        href={resolve('/')}
                                         class="group bg-primary text-primary-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                                         onclick={closeSidebar}
                                     >
@@ -411,7 +412,7 @@ const handleTouchEnd = () => {
                                 </li> -->
                                 <li>
                                     <a
-                                        href="/auth/signin"
+                                        href={resolve('/auth/signin')}
                                         class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                                         onclick={closeSidebar}
                                     >
@@ -457,7 +458,7 @@ const handleTouchEnd = () => {
     <div
         class="border-base-300 bg-base-100 flex grow flex-col gap-y-5 overflow-y-auto border-r px-6"
     >
-        <a href="/">
+        <a href={resolve('/')}>
             <div class="flex h-16 shrink-0 items-center">
                 <img
                     class="h-8 w-auto"
@@ -474,7 +475,7 @@ const handleTouchEnd = () => {
                         <li>
                             <!-- Current: "bg-primary text-primary-content", Default: "text-base-content/70 hover:bg-base-300 hover:text-base-content" -->
                             <a
-                                href="/"
+                                href={resolve('/')}
                                 class="group bg-primary text-primary-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                             >
                                 <svg
@@ -648,7 +649,7 @@ const handleTouchEnd = () => {
                         </li> -->
                         <li>
                             <a
-                                href="/auth/signin"
+                                href={resolve('/auth/signin')}
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                             >
                                 <span
@@ -663,7 +664,7 @@ const handleTouchEnd = () => {
                 </li>
                 <li class="-mx-6 mt-auto">
                     <a
-                        href="/account"
+                        href={resolve('/account')}
                         class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
                     >
                         <img
@@ -707,7 +708,7 @@ const handleTouchEnd = () => {
         </svg>
     </button>
     <div class="text-base-content flex-1 text-sm/6 font-semibold"></div>
-    <a href="/account">
+    <a href={resolve('/account')}>
         <span class="sr-only">Profile</span>
         <img
             class="bg-base-200 size-8 rounded-full"
