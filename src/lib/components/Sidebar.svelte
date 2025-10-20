@@ -1,147 +1,151 @@
 <script lang="ts">
-import { browser } from '$app/environment'
-import { preloadData } from '$app/navigation'
-import { intersectionObserver } from '$lib/actions/intersecting/use-intersection-observer.svelte'
-import { resolve } from '$app/paths'
+    import { browser } from '$app/environment'
+    import { preloadData } from '$app/navigation'
+    import { resolve } from '$app/paths'
+    import { intersectionObserver } from '$lib/actions/intersecting/use-intersection-observer.svelte'
+    import type { LayoutData } from '../../routes/$types.d.ts'
 
-let touchStartX = 0
-let touchStartY = 0
-let swipeDirection: 'horizontal' | 'vertical' | null = null
-let lastMoveX = 0
-let lastMoveTime = 0
-let velocity = 0
+    let { user }: { user: LayoutData['user'] } = $props()
 
-let isOpen = $state(false)
-let isDragging = $state(false)
-let currentTranslateX = $state(0)
+    let touchStartX = 0
+    let touchStartY = 0
+    let swipeDirection: 'horizontal' | 'vertical' | null = null
+    let lastMoveX = 0
+    let lastMoveTime = 0
+    let velocity = 0
 
-let sidebarWidth = $state(320)
-let sidebarPanel: HTMLDivElement | undefined
+    let isOpen = $state(false)
+    let isDragging = $state(false)
+    let currentTranslateX = $state(0)
 
-const openSidebar = () => {
-    isOpen = true
-}
+    let sidebarWidth = $state(320)
+    let sidebarPanel: HTMLDivElement | undefined
 
-/**
- * We preload the data for the pages that are shown in the sidebar.
- * This is to preload not on hover, but when menu is opened. This lets
- * us split application while keeping data load on server, but it still
- * feels fast.
- */
-const preloadSidebar = () => {
-    Promise.allSettled([preloadData('/auth/signin')])
-}
-
-const closeSidebar = () => {
-    isOpen = false
-}
-
-const handleKeydown = (event: KeyboardEvent) => event.key === 'Escape' && isOpen && closeSidebar()
-
-const handleBackgroundInteraction = (event: Event) => {
-    // Close sidebar if the click is on the background itself, not on the panel.
-    if (event.currentTarget === event.target) {
-        closeSidebar()
-    }
-}
-
-$effect(() => {
-    if (!browser) {
-        return
+    const openSidebar = () => {
+        isOpen = true
     }
 
-    if (sidebarPanel) {
-        sidebarWidth = sidebarPanel.clientWidth
+    /**
+     * We preload the data for the pages that are shown in the sidebar.
+     * This is to preload not on hover, but when menu is opened. This lets
+     * us split application while keeping data load on server, but it still
+     * feels fast.
+     */
+    const preloadSidebar = () => {
+        Promise.allSettled([preloadData('/auth/signin')])
     }
 
-    if (isOpen) {
-        document.body.classList.add('overflow-hidden')
-    } else {
-        document.body.classList.remove('overflow-hidden')
+    const closeSidebar = () => {
+        isOpen = false
     }
 
-    // Cleanup when the component is destroyed
-    return () => {
-        if (browser) {
-            document.body.classList.remove('overflow-hidden')
-        }
-    }
-})
+    const handleKeydown = (event: KeyboardEvent) =>
+        event.key === 'Escape' && isOpen && closeSidebar()
 
-const handleTouchStart = (e: TouchEvent) => {
-    if (!isOpen) {
-        return
-    }
-
-    touchStartX = e?.touches[0]?.clientX ?? 0
-    touchStartY = e?.touches[0]?.clientY ?? 0
-    isDragging = true
-    swipeDirection = null
-
-    // Reset velocity tracking
-    lastMoveX = touchStartX
-    lastMoveTime = performance.now()
-    velocity = 0
-}
-
-const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging) {
-        return
-    }
-
-    const deltaX = (e?.touches[0]?.clientX ?? 0) - touchStartX
-    const deltaY = (e?.touches[0]?.clientY ?? 0) - touchStartY
-
-    if (swipeDirection === null) {
-        swipeDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical'
-    }
-
-    if (swipeDirection === 'horizontal') {
-        const currentX = e?.touches[0]?.clientX ?? 0
-        const now = performance.now()
-        const timeDelta = now - lastMoveTime
-
-        if (timeDelta > 0) {
-            const moveDelta = currentX - lastMoveX
-            velocity = moveDelta / timeDelta
-        }
-
-        lastMoveX = currentX
-        lastMoveTime = now
-
-        // Emulate iOS rubber band effect
-        if (deltaX > 0) {
-            // Dragging right from open position (overscroll)
-            currentTranslateX = deltaX ** 0.7
-        } else {
-            // Dragging left
-            currentTranslateX = deltaX
-        }
-    }
-}
-
-const handleTouchEnd = () => {
-    if (!isDragging) {
-        return
-    }
-
-    isDragging = false
-
-    if (swipeDirection === 'horizontal') {
-        const flickVelocity = -0.3 // px/ms
-        // If swiped more than a 33% of the way, or flicked, close the sidebar
-        if (velocity < flickVelocity || currentTranslateX < -sidebarWidth / 3) {
+    const handleBackgroundInteraction = (event: Event) => {
+        // Close sidebar if the click is on the background itself, not on the panel.
+        if (event.currentTarget === event.target) {
             closeSidebar()
         }
-
-        // Reset translation. The element will animate to its final state (open or closed)
-        // because the transition class is re-applied.
-        currentTranslateX = 0
     }
 
-    swipeDirection = null
-    velocity = 0
-}
+    $effect(() => {
+        if (!browser) {
+            return
+        }
+
+        if (sidebarPanel) {
+            sidebarWidth = sidebarPanel.clientWidth
+        }
+
+        if (isOpen) {
+            document.body.classList.add('overflow-hidden')
+        } else {
+            document.body.classList.remove('overflow-hidden')
+        }
+
+        // Cleanup when the component is destroyed
+        return () => {
+            if (browser) {
+                document.body.classList.remove('overflow-hidden')
+            }
+        }
+    })
+
+    const handleTouchStart = (e: TouchEvent) => {
+        if (!isOpen) {
+            return
+        }
+
+        touchStartX = e?.touches[0]?.clientX ?? 0
+        touchStartY = e?.touches[0]?.clientY ?? 0
+        isDragging = true
+        swipeDirection = null
+
+        // Reset velocity tracking
+        lastMoveX = touchStartX
+        lastMoveTime = performance.now()
+        velocity = 0
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+        if (!isDragging) {
+            return
+        }
+
+        const deltaX = (e?.touches[0]?.clientX ?? 0) - touchStartX
+        const deltaY = (e?.touches[0]?.clientY ?? 0) - touchStartY
+
+        if (swipeDirection === null) {
+            swipeDirection = Math.abs(deltaX) > Math.abs(deltaY) ? 'horizontal' : 'vertical'
+        }
+
+        if (swipeDirection === 'horizontal') {
+            const currentX = e?.touches[0]?.clientX ?? 0
+            const now = performance.now()
+            const timeDelta = now - lastMoveTime
+
+            if (timeDelta > 0) {
+                const moveDelta = currentX - lastMoveX
+                velocity = moveDelta / timeDelta
+            }
+
+            lastMoveX = currentX
+            lastMoveTime = now
+
+            // Emulate iOS rubber band effect
+            if (deltaX > 0) {
+                // Dragging right from open position (overscroll)
+                currentTranslateX = deltaX ** 0.7
+            } else {
+                // Dragging left
+                currentTranslateX = deltaX
+            }
+        }
+    }
+
+    const handleTouchEnd = () => {
+        if (!isDragging) {
+            return
+        }
+
+        isDragging = false
+
+        if (swipeDirection === 'horizontal') {
+            const flickVelocity = -0.3 // px/ms
+            // If swiped more than a 33% of the way, or flicked, close the sidebar
+            if (velocity < flickVelocity || currentTranslateX < -sidebarWidth / 3) {
+                closeSidebar()
+            }
+
+            // Reset translation. The element will animate to its final state (open or closed)
+            // because the transition class is re-applied.
+            currentTranslateX = 0
+        }
+
+        swipeDirection = null
+        velocity = 0
+    }
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -382,37 +386,11 @@ const handleTouchEnd = () => {
                         <li>
                             <div class="text-base-content/50 text-xs/6 font-semibold">Actions</div>
                             <ul role="list" class="-mx-2 mt-2 space-y-1">
-                                <!-- <li>
-                                    <a
-                                        href="#top"
-                                        class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                                        onclick={closeSidebar}
-                                    >
-                                        <span
-                                            class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"
-                                        >
-                                            H
-                                        </span>
-                                        <span class="truncate">Heroicons</span>
-                                    </a>
-                                </li>
                                 <li>
                                     <a
-                                        href="#top"
-                                        class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                                        onclick={closeSidebar}
-                                    >
-                                        <span
-                                            class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"
-                                        >
-                                            T
-                                        </span>
-                                        <span class="truncate">Tailwind Labs</span>
-                                    </a>
-                                </li> -->
-                                <li>
-                                    <a
-                                        href={resolve('/auth/signin')}
+                                        href={user?.$id
+                                            ? resolve('/account')
+                                            : resolve('/auth/signin')}
                                         class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                                         onclick={closeSidebar}
                                     >
@@ -421,7 +399,9 @@ const handleTouchEnd = () => {
                                         >
                                             S
                                         </span>
-                                        <span class="truncate">Sign in</span>
+                                        <span class="truncate">
+                                            {user?.$id ? 'Account' : 'Sign in'}
+                                        </span>
                                     </a>
                                 </li>
                             </ul>
@@ -621,35 +601,9 @@ const handleTouchEnd = () => {
                 <li>
                     <div class="text-base-content/50 text-xs/6 font-semibold">Actions</div>
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
-                        <!-- <li>
-                            <a
-                                href="#top"
-                                class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                            >
-                                <span
-                                    class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"
-                                >
-                                    H
-                                </span>
-                                <span class="truncate">Heroicons</span>
-                            </a>
-                        </li>
                         <li>
                             <a
-                                href="#top"
-                                class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
-                            >
-                                <span
-                                    class="border-base-300 bg-base-100 text-base-content/50 group-hover:border-primary group-hover:text-primary flex size-6 shrink-0 items-center justify-center rounded-lg border text-[0.625rem] font-medium"
-                                >
-                                    T
-                                </span>
-                                <span class="truncate">Tailwind Labs</span>
-                            </a>
-                        </li> -->
-                        <li>
-                            <a
-                                href={resolve('/auth/signin')}
+                                href={user?.$id ? resolve('/account') : resolve('/auth/signin')}
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                             >
                                 <span
@@ -657,26 +611,28 @@ const handleTouchEnd = () => {
                                 >
                                     S
                                 </span>
-                                <span class="truncate">Sign in</span>
+                                <span class="truncate">{user?.$id ? 'Account' : 'Sign in'}</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="-mx-6 mt-auto">
-                    <a
-                        href={resolve('/account')}
-                        class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
-                    >
-                        <img
-                            class="bg-base-200 size-8 rounded-full"
-                            src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
-                            alt="Some Dude"
-                            crossorigin="anonymous"
-                        />
-                        <span class="sr-only">Your profile</span>
-                        <span aria-hidden="true">Tom Cook</span>
-                    </a>
-                </li>
+                {#if user?.$id}
+                    <li class="-mx-6 mt-auto">
+                        <a
+                            href={resolve('/account')}
+                            class="text-base-content hover:bg-base-300 flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold"
+                        >
+                            <img
+                                class="bg-base-200 size-8 rounded-full"
+                                src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
+                                alt="Some Dude"
+                                crossorigin="anonymous"
+                            />
+                            <span class="sr-only">Your profile</span>
+                            <span aria-hidden="true">Tom Cook</span>
+                        </a>
+                    </li>
+                {/if}
             </ul>
         </nav>
     </div>
@@ -709,13 +665,15 @@ const handleTouchEnd = () => {
         </svg>
     </button>
     <div class="text-base-content flex-1 text-sm/6 font-semibold"></div>
-    <a href={resolve('/account')}>
-        <span class="sr-only">Profile</span>
-        <img
-            class="bg-base-200 size-8 rounded-full"
-            src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
-            alt="Tom"
-            crossorigin="anonymous"
-        />
-    </a>
+    {#if user?.$id}
+        <a href={resolve('/account')}>
+            <span class="sr-only">Profile</span>
+            <img
+                class="bg-base-200 size-8 rounded-full"
+                src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
+                alt="Tom"
+                crossorigin="anonymous"
+            />
+        </a>
+    {/if}
 </div>

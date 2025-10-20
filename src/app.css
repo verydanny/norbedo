@@ -41,14 +41,14 @@
     --font-display: 'Helvetica Neue', BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 }
 
-@plugin "daisyui" {
+@plugin 'daisyui' {
     themes: aqua --default;
     root: ':root';
     logs: false;
     include: button, mockup;
 }
 
-@plugin "daisyui/theme" {
+@plugin 'daisyui/theme' {
     name: 'aqua';
     default: true;
     prefersdark: true;

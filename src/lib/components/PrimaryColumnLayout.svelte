@@ -1,11 +1,12 @@
 <script lang="ts">
-import type { Snippet } from 'svelte'
-import Sidebar from './Sidebar.svelte'
+    import type { Snippet } from 'svelte'
+    import Sidebar from './Sidebar.svelte'
+    import type { LayoutData } from '../../routes/$types.d.ts'
 
-let { children }: { children: Snippet } = $props()
+    let { children, user }: { children: Snippet; user: LayoutData['user'] } = $props()
 </script>
 
-<Sidebar />
+<Sidebar {user} />
 
 <main class="lg:pl-72">
     <div class="xl:pr-96">

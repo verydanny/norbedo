@@ -1,11 +1,11 @@
 <script lang="ts">
-import { enhance } from '$app/forms'
-import { page } from '$app/state'
+    import { enhance } from '$app/forms'
+    import { page } from '$app/state'
 
-const isSigninPage = $derived(page.params.type === 'signin')
+    const isSigninPage = $derived(page.params.type === 'signin')
 
-let { form } = $props()
-let loading = $state(false)
+    let { form } = $props()
+    let loading = $state(false)
 </script>
 
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

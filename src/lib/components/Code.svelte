@@ -1,20 +1,20 @@
 <script lang="ts">
-let { code }: { code: string } = $props()
-let copied = $state(false)
+    let { code }: { code: string } = $props()
+    let copied = $state(false)
 
-const lines = code.split('\n')
+    const lines = code.split('\n')
 
-const copyToClipboard = async () => {
-    try {
-        await navigator.clipboard.writeText(code)
-        copied = true
-        setTimeout(() => {
-            copied = false
-        }, 2000)
-    } catch (err) {
-        console.error('Failed to copy text:', err)
+    const copyToClipboard = async () => {
+        try {
+            await navigator.clipboard.writeText(code)
+            copied = true
+            setTimeout(() => {
+                copied = false
+            }, 2000)
+        } catch (err) {
+            console.error('Failed to copy text:', err)
+        }
     }
-}
 </script>
 
 <div class="bg-base-200 mockup-code w-full">

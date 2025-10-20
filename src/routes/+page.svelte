@@ -1,5 +1,5 @@
 <script lang="ts">
-import LoadingScreenMinimal from '$lib/components/LoadingScreenMinimal.svelte'
+    import LoadingScreenMinimal from '$lib/components/LoadingScreenMinimal.svelte'
 </script>
 
 <svelte:head>

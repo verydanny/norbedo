@@ -1,47 +1,47 @@
 <script lang="ts">
-import { onMount } from 'svelte'
-import { page } from '$app/state'
-import { resolve } from '$app/paths'
-import Code from '$lib/components/Code.svelte'
+    import { onMount } from 'svelte'
+    import { page } from '$app/state'
+    import { resolve } from '$app/paths'
+    import Code from '$lib/components/Code.svelte'
 
-const errorMessage = $derived(page.error?.message || 'Page not found')
-const errorDetails = $derived(page.error ? JSON.stringify(page.error, null, 0) : '')
-const statusCode = $derived(page.status || 404)
+    const errorMessage = $derived(page.error?.message || 'Page not found')
+    const errorDetails = $derived(page.error ? JSON.stringify(page.error, null, 0) : '')
+    const statusCode = $derived(page.status || 404)
 
-let leftEye: HTMLElement
-let rightEye: HTMLElement
-let currentMouseX = $state(globalThis.innerWidth * 0.6)
-let currentMouseY = $state(globalThis.innerHeight * 0.4)
+    let leftEye: HTMLElement
+    let rightEye: HTMLElement
+    let currentMouseX = $state(globalThis.innerWidth * 0.6)
+    let currentMouseY = $state(globalThis.innerHeight * 0.4)
 
-const updateEyePosition = (clientX: number, clientY: number) => {
-    if (!leftEye || !rightEye) {
-        return
+    const updateEyePosition = (clientX: number, clientY: number) => {
+        if (!leftEye || !rightEye) {
+            return
+        }
+
+        ;[leftEye, rightEye].forEach((eye) => {
+            const rect = eye.getBoundingClientRect()
+            const eyeCenterX = rect.left + rect.width / 2
+            const eyeCenterY = rect.top + rect.height / 2
+            const angle = Math.atan2(clientY - eyeCenterY, clientX - eyeCenterX)
+            const pupil = eye.querySelector('.pupil') as HTMLElement
+
+            if (pupil) {
+                const distance = Math.min(rect.width * 0.2, rect.height * 0.2)
+                pupil.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`
+            }
+        })
     }
 
-    ;[leftEye, rightEye].forEach((eye) => {
-        const rect = eye.getBoundingClientRect()
-        const eyeCenterX = rect.left + rect.width / 2
-        const eyeCenterY = rect.top + rect.height / 2
-        const angle = Math.atan2(clientY - eyeCenterY, clientX - eyeCenterX)
-        const pupil = eye.querySelector('.pupil') as HTMLElement
+    const handleMouseMove = (e: MouseEvent) => {
+        currentMouseX = e.clientX
+        currentMouseY = e.clientY
+        updateEyePosition(currentMouseX, currentMouseY)
+    }
 
-        if (pupil) {
-            const distance = Math.min(rect.width * 0.2, rect.height * 0.2)
-            pupil.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`
-        }
+    onMount(() => {
+        document.addEventListener('mousemove', handleMouseMove)
+        return () => document.removeEventListener('mousemove', handleMouseMove)
     })
-}
-
-const handleMouseMove = (e: MouseEvent) => {
-    currentMouseX = e.clientX
-    currentMouseY = e.clientY
-    updateEyePosition(currentMouseX, currentMouseY)
-}
-
-onMount(() => {
-    document.addEventListener('mousemove', handleMouseMove)
-    return () => document.removeEventListener('mousemove', handleMouseMove)
-})
 </script>
 
 <div

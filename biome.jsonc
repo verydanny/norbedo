@@ -9,14 +9,16 @@
                 "useSortedProperties": "on"
             }
         },
-        "enabled": true
+        "enabled": true,
+        "includes": ["**", "!tsconfig.json", "!package.json", "!src/**/*.svelte"]
     },
     "files": {
         "ignoreUnknown": false,
         "includes": [
-            "src/**/*.ts",
-            "src/**/*.js",
-            "!src/**/*.svelte",
+            "**",
+            "!**/*.svelte",
+            "!src/app.css",
+            "!worker-configuration.d.ts",
             "svelte.config.js",
             "vite.config.ts",
             "vitest-setup-client.ts"
@@ -30,13 +32,6 @@
         "expand": "auto",
         "formatWithErrors": false,
         "includes": [
-            "**",
-            "!**/package-lock.json",
-            "!**/pnpm-lock.yaml",
-            "!**/yarn.lock",
-            "!**/bun.lock",
-            "!**/bun.lockb",
-            "!./static/",
             "**",
             "!**/package-lock.json",
             "!**/pnpm-lock.yaml",
@@ -76,7 +71,13 @@
             },
             "correctness": {
                 "recommended": true,
-                "useImportExtensions": "on"
+                "useImportExtensions": {
+                    "fix": "safe",
+                    "level": "error",
+                    "options": {
+                        "forceJsExtensions": false
+                    }
+                }
             },
             "nursery": {
                 "recommended": true
