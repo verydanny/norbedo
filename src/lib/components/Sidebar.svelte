@@ -7,6 +7,8 @@
 
     let { user }: { user: LayoutData['user'] } = $props()
 
+    console.log('user', user)
+
     let touchStartX = 0
     let touchStartY = 0
     let swipeDirection: 'horizontal' | 'vertical' | null = null

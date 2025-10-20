@@ -1,5 +1,6 @@
 <script lang="ts">
     import { enhance } from '$app/forms'
+    import { invalidate } from '$app/navigation'
     import { page } from '$app/state'
 
     const isSigninPage = $derived(page.params.type === 'signin')
@@ -36,9 +37,13 @@
                 class="space-y-6"
                 use:enhance={() => {
                     loading = true
-                    return async ({ update }) => {
+                    return async ({ update, result }) => {
                         await update()
                         loading = false
+                        // Invalidate user data after successful login/signup
+                        if (result.type === 'redirect') {
+                            await invalidate('app:user')
+                        }
                     }
                 }}
             >

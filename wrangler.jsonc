@@ -1,23 +1,26 @@
 {
-    "name": "norbedo",
     "account_id": "f0a1a2b8737641fcda727d0bf64cb283",
-    "main": "./.svelte-kit/cloudflare/_worker.js",
-    "compatibility_date": "2025-10-20",
-    "compatibility_flags": ["nodejs_compat"],
+    "assets": {
+        "binding": "ASSETS",
+        "directory": ".svelte-kit/cloudflare"
+    },
     "build": {
         "command": "bun run build"
     },
+    "compatibility_date": "2025-10-20",
+    "compatibility_flags": ["nodejs_compat"],
     "limits": {
         "cpu_ms": 50,
         "memory_mb": 128
     },
+    "main": "./.svelte-kit/cloudflare/_worker.js",
+    "name": "norbedo",
     "observability": {
         "enabled": true,
         "head_sampling_rate": 1.0
     },
-    "assets": {
-        "directory": ".svelte-kit/cloudflare",
-        "binding": "ASSETS"
+    "placement": {
+        "mode": "smart"
     },
     "routes": [
         {
@@ -25,12 +28,9 @@
             "zone_id": "58582690ed7f0e1ccd880051b8ac2608"
         }
     ],
-    "placement": {
-        "mode": "smart"
-    },
     "vars": {
-        "SESSION_COOKIE_PREFIX": "a_session_",
         "PUBLIC_APPWRITE_API_ENDPOINT": "https://syd.cloud.appwrite.io/v1",
-        "PUBLIC_APPWRITE_PROJECT_ID": "norbedo"
+        "PUBLIC_APPWRITE_PROJECT_ID": "norbedo",
+        "SESSION_COOKIE_PREFIX": "a_session_"
     }
 }

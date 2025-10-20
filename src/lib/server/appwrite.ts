@@ -1,9 +1,9 @@
 import type { Cookies, RequestEvent } from '@sveltejs/kit'
 import { Account, Client, type Models, Users } from 'node-appwrite'
-import { APPWRITE_API_KEY, SESSION_COOKIE_PREFIX } from '$env/static/private'
-import { PUBLIC_APPWRITE_API_ENDPOINT, PUBLIC_APPWRITE_PROJECT_ID } from '$env/static/public'
+import { env } from '$env/dynamic/private'
+import { env as publicEnv } from '$env/dynamic/public'
 
-export const COOKIE_NAME = `${SESSION_COOKIE_PREFIX}${PUBLIC_APPWRITE_PROJECT_ID}`
+export const COOKIE_NAME = `${env.SESSION_COOKIE_PREFIX}${publicEnv.PUBLIC_APPWRITE_PROJECT_ID}`
 export const COOKIE_NAME_LEGACY = `${COOKIE_NAME}_legacy`
 
 export const setSessionCookies = (cookies: Cookies, session: Models.Session) =>
@@ -19,9 +19,9 @@ export const setSessionCookies = (cookies: Cookies, session: Models.Session) =>
 
 export function createAdminAppwriteClient() {
     const client = new Client()
-        .setEndpoint(PUBLIC_APPWRITE_API_ENDPOINT)
-        .setProject(PUBLIC_APPWRITE_PROJECT_ID)
-        .setKey(APPWRITE_API_KEY)
+        .setEndpoint(publicEnv.PUBLIC_APPWRITE_API_ENDPOINT)
+        .setProject(publicEnv.PUBLIC_APPWRITE_PROJECT_ID)
+        .setKey(env.APPWRITE_API_KEY)
 
     return {
         get account() {
@@ -39,8 +39,8 @@ export const getSession = ({ cookies }: RequestEvent) => {
 
 export function createUserAppwriteClient(event: RequestEvent) {
     const client = new Client()
-        .setEndpoint(PUBLIC_APPWRITE_API_ENDPOINT)
-        .setProject(PUBLIC_APPWRITE_PROJECT_ID)
+        .setEndpoint(publicEnv.PUBLIC_APPWRITE_API_ENDPOINT)
+        .setProject(publicEnv.PUBLIC_APPWRITE_PROJECT_ID)
 
     const session = getSession(event)
     if (!session) {
