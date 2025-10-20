@@ -13,7 +13,7 @@
     },
     "observability": {
         "enabled": true,
-        "head_sampling_rate": 0.05
+        "head_sampling_rate": 1.0
     },
     "assets": {
         "directory": ".svelte-kit/cloudflare",

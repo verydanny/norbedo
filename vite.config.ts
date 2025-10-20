@@ -28,7 +28,6 @@ export default defineConfig(({ mode }) => {
         },
         esbuild: production
             ? {
-                  drop: ['console', 'debugger'],
                   legalComments: 'none',
                   minifyIdentifiers: true,
                   minifySyntax: true,

@@ -47,7 +47,9 @@ export const authentication = new Hono()
                 },
                 200
             )
-        } catch (_error) {
+        } catch (error) {
+            console.error(error)
+
             return c.json(
                 {
                     error: 'Could not create username or Password'

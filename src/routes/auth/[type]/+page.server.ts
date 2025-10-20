@@ -109,8 +109,6 @@ export const actions = {
             }
         })
 
-        console.log(sessionResponse)
-
         if (sessionResponse.ok) {
             return redirect(302, '/account')
         }
