@@ -1,6 +1,9 @@
 <script lang="ts">
+    import { enhance } from '$app/forms'
+    import { invalidate } from '$app/navigation'
+
     const { data } = $props()
-    const { user } = data
+    const { user } = $derived(data)
 </script>
 
 {#await user}
@@ -28,7 +31,16 @@
             </li>
         </ul>
 
-        <form method="post">
+        <form
+            method="post"
+            use:enhance={async () => {
+                return async ({ result }) => {
+                    if (result.type === 'redirect') {
+                        await invalidate('app:user')
+                    }
+                }
+            }}
+        >
             <button type="submit">Log out</button>
         </form>
     {/if}

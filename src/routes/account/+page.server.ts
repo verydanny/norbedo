@@ -1,28 +1,6 @@
 import { redirect } from '@sveltejs/kit'
-import type { Models } from 'node-appwrite'
-import {
-    COOKIE_NAME,
-    COOKIE_NAME_LEGACY,
-    createUserAppwriteClient,
-    getSession
-} from '$lib/server/appwrite'
-import type { PageServerLoadEvent, RequestEvent } from './$types'
-
-export async function load(event: PageServerLoadEvent): Promise<{
-    user: Promise<Models.User<Models.Preferences> | null>
-}> {
-    const session = getSession(event)
-
-    if (!session) {
-        redirect(302, '/auth/signin?redirectTo=/account')
-    }
-
-    const { account } = createUserAppwriteClient(event)
-
-    return {
-        user: account.get().catch(() => null)
-    }
-}
+import { COOKIE_NAME, COOKIE_NAME_LEGACY, createUserAppwriteClient } from '$lib/server/appwrite'
+import type { RequestEvent } from './$types'
 
 // Define our log out endpoint/server action.
 export const actions = {
@@ -31,7 +9,7 @@ export const actions = {
         const { account } = createUserAppwriteClient(event)
 
         // Delete the session on Appwrite, and delete the session cookie.
-        await account.deleteSession('current')
+        await account.deleteSession({ sessionId: 'current' })
         event.cookies.delete(COOKIE_NAME, { path: '/' })
         event.cookies.delete(COOKIE_NAME_LEGACY, { path: '/' })
 
