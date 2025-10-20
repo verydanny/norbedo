@@ -29,8 +29,8 @@ const config = {
         }),
         inlineStyleThreshold: Infinity,
         output: {
-            bundleStrategy: 'split',
-            preloadStrategy: 'preload-mjs'
+            bundleStrategy: 'inline'
+            // preloadStrategy: 'preload-mjs',
         }
         // router: {
         //     type: 'pathname',

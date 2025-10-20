@@ -70,14 +70,17 @@ export const actions = {
         | ActionFailure<{
               error: true
               errors: Partial<ErrorResponse>
+              email: string | null
+              password: string | null
           }>
         | undefined
     > => {
         const client = makeClient(fetch)
-        const result = await safeParseAsync(
-            EmailPasswordSchema,
-            Object.fromEntries(await request.formData())
-        )
+        const formData = Object.fromEntries(await request.formData()) as {
+            email?: string
+            password?: string
+        }
+        const result = await safeParseAsync(EmailPasswordSchema, formData)
 
         if (!result.success) {
             const errors = result.issues.reduce((acc, error) => {
@@ -92,8 +95,10 @@ export const actions = {
             }, {} as ErrorResponse)
 
             return fail(400, {
+                email: formData?.email ?? null,
                 error: true,
-                errors
+                errors,
+                password: formData?.password ?? null
             })
         }
 
@@ -104,16 +109,20 @@ export const actions = {
             }
         })
 
+        console.log(sessionResponse)
+
         if (sessionResponse.ok) {
             return redirect(302, '/account')
         }
 
         return fail(400, {
+            email: null,
             error: true,
             errors: {
                 email: { message: 'Invalid email' },
                 password: { message: 'Invalid password' }
-            }
+            },
+            password: null
         })
     }
 }

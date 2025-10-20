@@ -671,6 +671,7 @@ const handleTouchEnd = () => {
                             class="bg-base-200 size-8 rounded-full"
                             src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
                             alt="Some Dude"
+                            crossorigin="anonymous"
                         />
                         <span class="sr-only">Your profile</span>
                         <span aria-hidden="true">Tom Cook</span>
@@ -714,6 +715,7 @@ const handleTouchEnd = () => {
             class="bg-base-200 size-8 rounded-full"
             src="https://storage.norbedo.com/storage/uploads/app-app/assets/tom.jpg"
             alt="Tom"
+            crossorigin="anonymous"
         />
     </a>
 </div>
