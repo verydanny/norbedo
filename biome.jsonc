@@ -12,6 +12,22 @@
         "enabled": true,
         "includes": ["**", "!tsconfig.json", "!package.json", "!src/**/*.svelte"]
     },
+    "css": {
+        "assist": {
+            "enabled": false
+        },
+        "formatter": {
+            "enabled": true,
+            "indentStyle": "space",
+            "indentWidth": 4
+        },
+        "linter": {
+            "enabled": true
+        },
+        "parser": {
+            "tailwindDirectives": true
+        }
+    },
     "files": {
         "ignoreUnknown": false,
         "includes": [
@@ -46,7 +62,10 @@
         "lineWidth": 100,
         "useEditorconfig": true
     },
-    "html": { "formatter": { "selfCloseVoidElements": "always" } },
+    "html": {
+        "experimentalFullSupportEnabled": true,
+        "formatter": { "indentScriptAndStyle": true, "selfCloseVoidElements": "always" }
+    },
     "javascript": {
         "formatter": {
             "arrowParentheses": "always",
@@ -97,22 +116,22 @@
             }
         }
     },
-    "overrides": [
-        {
-            "includes": ["**/*.svelte"],
-            "linter": {
-                "rules": {
-                    "correctness": {
-                        "noUnusedImports": "off",
-                        "noUnusedVariables": "off"
-                    },
-                    "style": {
-                        "useConst": "off",
-                        "useImportType": "off"
-                    }
-                }
-            }
-        }
-    ],
+    // "overrides": [
+    //     {
+    //         "includes": ["**/*.svelte"],
+    //         "linter": {
+    //             "rules": {
+    //                 "correctness": {
+    //                     "noUnusedImports": "off",
+    //                     "noUnusedVariables": "off"
+    //                 },
+    //                 "style": {
+    //                     "useConst": "off",
+    //                     "useImportType": "off"
+    //                 }
+    //             }
+    //         }
+    //     }
+    // ],
     "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true }
 }
