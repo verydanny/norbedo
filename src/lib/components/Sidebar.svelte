@@ -390,9 +390,7 @@
                             <ul role="list" class="-mx-2 mt-2 space-y-1">
                                 <li>
                                     <a
-                                        href={user?.$id
-                                            ? resolve('/account')
-                                            : resolve('/auth/signin')}
+                                        href={resolve(user?.$id ? '/account' : '/auth/signin')}
                                         class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                                         onclick={closeSidebar}
                                     >
@@ -605,7 +603,7 @@
                     <ul role="list" class="-mx-2 mt-2 space-y-1">
                         <li>
                             <a
-                                href={user?.$id ? resolve('/account') : resolve('/auth/signin')}
+                                href={resolve(user?.$id ? '/account' : '/auth/signin')}
                                 class="group text-base-content/70 hover:bg-base-300 hover:text-base-content flex gap-x-3 rounded-md p-2 text-sm/6 font-semibold"
                             >
                                 <span

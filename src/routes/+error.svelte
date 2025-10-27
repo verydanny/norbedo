@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { onMount } from 'svelte'
     import { page } from '$app/state'
-    import { resolve } from '$app/paths'
+import { resolve } from '$app/paths'
     import Code from '$lib/components/Code.svelte'
+    import { onMount } from 'svelte'
 
     const errorMessage = $derived(page.error?.message || 'Page not found')
     const errorDetails = $derived(page.error ? JSON.stringify(page.error, null, 0) : '')

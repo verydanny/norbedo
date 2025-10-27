@@ -20,7 +20,7 @@ type LifecycleEventDetails = {
 
 declare namespace svelteHTML {
     // biome-ignore lint/correctness/noUnusedVariables: I'm just overriding the types
-    interface HTMLAttributes<T> {
+    interface HTMLAttributes {
         // Backwards compatibility
         'on:inview_change'?: (e: CustomEvent<ObserverEventDetails>) => void
         'on:inview_enter'?: (e: CustomEvent<ObserverEventDetails>) => void

@@ -8,7 +8,9 @@ export const handle: Handle = async ({ event, resolve }) => {
         const { account } = createUserAppwriteClient(event)
 
         event.locals.user = await account.get()
-    } catch {}
+    } catch {
+        // do nothing
+    }
 
     console.log(`Time taken: ${performance.now() - timer}ms`)
 

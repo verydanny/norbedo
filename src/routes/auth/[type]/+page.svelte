@@ -1,6 +1,7 @@
 <script lang="ts">
     import { enhance } from '$app/forms'
     import { invalidate } from '$app/navigation'
+    import { resolve } from '$app/paths'
     import { page } from '$app/state'
 
     const isSigninPage = $derived(page.params.type === 'signin')
@@ -138,7 +139,7 @@
             <p class="mt-10 text-center text-sm/6 text-gray-400">
                 {isSigninPage ? 'Not a member?' : 'Already have an account?'}
                 <a
-                    href={isSigninPage ? '/auth/signup' : '/auth/signin'}
+                    href={resolve(isSigninPage ? '/auth/signup' : '/auth/signin')}
                     role="button"
                     tabindex="0"
                     type="button"

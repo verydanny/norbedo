@@ -17,7 +17,7 @@
         "install:playwright": "bunx playwright install --only-shell"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.3.1",
+        "@biomejs/biome": "2.3.0",
         "@eslint/compat": "^1.4.0",
         "@eslint/js": "^9.38.0",
         "@hono/valibot-validator": "^0.5.3",

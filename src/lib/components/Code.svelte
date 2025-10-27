@@ -1,5 +1,5 @@
 <script lang="ts">
-    let { code }: { code: string } = $props()
+    const { code }: { code: string } = $props()
     let copied = $state(false)
 
     const lines = code.split('\n')
@@ -25,7 +25,7 @@
     >
         {copied ? '✓ Copied!' : '📋 Copy'}
     </button>
-    {#each lines as line, index}
+    {#each lines as line, index (line)}
         <pre data-prefix={index + 1}><code>{line}</code></pre>
     {/each}
 </div>

@@ -91,7 +91,9 @@ export function intersectionObserver(
                         //@ts-expect-error only for backward compatibility
                         node.dispatchEvent(createEvent('enter', detail))
 
-                        unobserveOnEnter && _observer.unobserve(node)
+                        if (unobserveOnEnter) {
+                            _observer.unobserve(node)
+                        }
                     } else {
                         node.dispatchEvent(createEvent('inview_leave', detail))
                         //@ts-expect-error only for backward compatibility
