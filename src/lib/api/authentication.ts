@@ -2,7 +2,7 @@ import { vValidator } from '@hono/valibot-validator'
 import { setCookie } from 'hono/cookie'
 import { Hono } from 'hono/tiny'
 import { ID } from 'node-appwrite'
-import { EmailPasswordSchema } from '$lib/schemas/authentication'
+import { SigninEmailPasswordSchema, SignupEmailPasswordSchema } from '$lib/schemas/authentication'
 import { COOKIE_NAME, COOKIE_NAME_LEGACY, createAdminAppwriteClient } from '$lib/server/appwrite'
 
 export const authentication = new Hono()
@@ -11,7 +11,7 @@ export const authentication = new Hono()
             message: 'Hello World'
         })
     })
-    .post('/signup', vValidator('json', EmailPasswordSchema), async (c) => {
+    .post('/signup', vValidator('json', SignupEmailPasswordSchema), async (c) => {
         const { account } = createAdminAppwriteClient()
         const body = c.req.valid('json')
 
@@ -58,7 +58,7 @@ export const authentication = new Hono()
             )
         }
     })
-    .post('/signin', vValidator('json', EmailPasswordSchema), async (c) => {
+    .post('/signin', vValidator('json', SigninEmailPasswordSchema), async (c) => {
         const { account } = createAdminAppwriteClient()
         const body = c.req.valid('json')
 

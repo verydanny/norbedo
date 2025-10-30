@@ -1,7 +1,7 @@
 import { type ActionFailure, fail, redirect } from '@sveltejs/kit'
 import { safeParseAsync } from 'valibot'
 import { makeClient } from '$lib/api/make-client'
-import { EmailPasswordSchema } from '$lib/schemas/authentication'
+import { SigninEmailPasswordSchema, SignupEmailPasswordSchema } from '$lib/schemas/authentication'
 import type { RequestEvent } from './$types.d.ts'
 
 type ErrorResponse = Record<'email' | 'password', { message: string }>
@@ -19,7 +19,7 @@ export const actions = {
     > => {
         const client = makeClient(fetch)
         const result = await safeParseAsync(
-            EmailPasswordSchema,
+            SigninEmailPasswordSchema,
             Object.fromEntries(await request.formData())
         )
 
@@ -74,7 +74,7 @@ export const actions = {
             email?: string
             password?: string
         }
-        const result = await safeParseAsync(EmailPasswordSchema, formData)
+        const result = await safeParseAsync(SignupEmailPasswordSchema, formData)
 
         if (!result.success) {
             const errors = result.issues.reduce((acc, error) => {

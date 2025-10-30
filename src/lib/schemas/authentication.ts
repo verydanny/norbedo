@@ -7,13 +7,20 @@ export const EmailSchema = pipe(
     email('Hmmmm, are you sure this is a valid email address?')
 )
 
-export const PasswordSchema = pipe(
+export const SignupPasswordSchema = pipe(
     string('Please enter your password.'),
-    minLength(8, 'Password must be at least 8 characters long.'),
+    minLength(8, 'Nah.'),
     trim()
 )
 
-export const EmailPasswordSchema = object({
+export const SigninPasswordSchema = pipe(string('Please enter your password.'), trim())
+
+export const SignupEmailPasswordSchema = object({
     email: EmailSchema,
-    password: PasswordSchema
+    password: SignupPasswordSchema
+})
+
+export const SigninEmailPasswordSchema = object({
+    email: EmailSchema,
+    password: SigninPasswordSchema
 })
