@@ -25,7 +25,7 @@
     >
         {copied ? '✓ Copied!' : '📋 Copy'}
     </button>
-    {#each lines as line, index (line)}
+    {#each lines as line, index (line + index)}
         <pre data-prefix={index + 1}><code>{line}</code></pre>
     {/each}
 </div>

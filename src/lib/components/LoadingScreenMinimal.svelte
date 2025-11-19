@@ -61,7 +61,7 @@
 <div class="bg-base-300 fixed inset-0 flex items-center justify-center overflow-hidden">
     <div class="scene">
         <div class="text-3d">
-            {#each 'norbedo'.split('') as letter, index (letter)}
+            {#each 'norbedo'.split('') as letter, index (letter + index)}
                 <span class="letter" style="--index: {index}">
                     {letter}
                 </span>

@@ -5,9 +5,7 @@
     import { intersectionObserver } from '$lib/actions/intersecting/use-intersection-observer.svelte'
     import type { LayoutData } from '../../routes/$types.d.ts'
 
-    let { user }: { user: LayoutData['user'] } = $props()
-
-    console.log('user', user)
+    let { user }: { user?: LayoutData['user'] } = $props()
 
     let touchStartX = 0
     let touchStartY = 0
