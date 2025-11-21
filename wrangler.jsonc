@@ -1,36 +1,38 @@
 {
-    "account_id": "f0a1a2b8737641fcda727d0bf64cb283",
-    "assets": {
-        "binding": "ASSETS",
-        "directory": ".svelte-kit/cloudflare"
-    },
-    "build": {
-        "command": "bun run build"
-    },
-    "compatibility_date": "2025-10-20",
-    "compatibility_flags": ["nodejs_compat"],
-    "limits": {
-        "cpu_ms": 50,
-        "memory_mb": 128
-    },
-    "main": "./.svelte-kit/cloudflare/_worker.js",
-    "name": "norbedo",
-    "observability": {
-        "enabled": true,
-        "head_sampling_rate": 1.0
-    },
-    "placement": {
-        "mode": "smart"
-    },
-    "routes": [
-        {
-            "pattern": "norbedo.com/*",
-            "zone_id": "58582690ed7f0e1ccd880051b8ac2608"
-        }
-    ],
-    "vars": {
-        "PUBLIC_APPWRITE_API_ENDPOINT": "https://syd.cloud.appwrite.io/v1",
-        "PUBLIC_APPWRITE_PROJECT_ID": "norbedo",
-        "SESSION_COOKIE_PREFIX": "a_session_"
-    }
+	"account_id": "f0a1a2b8737641fcda727d0bf64cb283",
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"build": {
+		"command": "bun run build"
+	},
+	"compatibility_date": "2025-10-20",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"limits": {
+		"cpu_ms": 50,
+		"memory_mb": 128
+	},
+	"main": "./.svelte-kit/cloudflare/_worker.js",
+	"name": "norbedo",
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 0.05
+	},
+	"placement": {
+		"mode": "smart"
+	},
+	"routes": [
+		{
+			"pattern": "norbedo.com/*",
+			"zone_id": "58582690ed7f0e1ccd880051b8ac2608"
+		}
+	],
+	"vars": {
+		"PUBLIC_APPWRITE_API_ENDPOINT": "https://appwrite.norbedo.com/v1",
+		"PUBLIC_APPWRITE_PROJECT_ID": "691e683a001ef2280446",
+		"SESSION_COOKIE_PREFIX": "a_session_"
+	}
 }
